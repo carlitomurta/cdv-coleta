@@ -14,10 +14,14 @@ export default {
         content: 'O site da coleta da sua vizinhança',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },{
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Bowlby+One&family=Roboto&display=swap',
-      },],
+        href:
+          'https://fonts.googleapis.com/css2?family=Bowlby+One&family=Roboto&display=swap',
+      },
+    ],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)

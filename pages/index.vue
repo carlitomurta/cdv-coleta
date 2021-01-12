@@ -25,6 +25,14 @@
             >
               See more
             </nuxt-link>
+            <nuxt-link
+              :to="{ path: '/cadastro' }"
+              class="block w-32 h-10 min-h-0 px-4 py-2 mx-auto font-bold text-center capitalize bg-transparent border rounded shadow-md border-brand-leaf text-brand-leaf hover:border-brand-green hover:text-brand-green"
+              type="button"
+              role="button"
+            >
+              Nova Pagina
+            </nuxt-link>
           </div>
         </div>
       </div>
@@ -42,7 +50,7 @@
           </div>
           <div class="flex-1">
             <h1 class="mb-8 text-2xl text-white font-head lg:text-4xl">
-              About Us
+              Sobre Nós
             </h1>
             <h3 class="mb-6 text-base text-white lg:text-xl">
               We are a distributed team with developers in the United States and
@@ -71,7 +79,7 @@
           <h1
             class="mb-12 text-2xl text-center font-head text-grey-400 lg:text-4xl"
           >
-            What we do
+            O Que Fazemos
           </h1>
           <div class="justify-center lg:flex">
             <div class="p-8 mb-8 bg-white shadow lg:mr-8 rounded-xl lg:mb-0">

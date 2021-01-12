@@ -58,18 +58,18 @@ module.exports = {
         500: '#F4EEFB',
       },
     },
-    extend:{
+    extend: {
       colors: {
         brand: {
           leaf: '#92C133',
           green: '#0D8C34',
         },
       },
-      fontFamily:{
+      fontFamily: {
         head: ['Bowlby One'],
-        sans: ['Roboto']
-      }
-    }
+        sans: ['Roboto'],
+      },
+    },
   },
   variants: {
     extend: {},

@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.outline input:focus-within ~ label,
+.outline input:not(:placeholder-shown) ~ label {
+  @apply z-0 px-1 py-0 ml-3 transform scale-75 -translate-y-3;
+}
+.outline textarea:focus-within ~ label,
+.outline textarea:not(:placeholder-shown) ~ label {
+  @apply z-0 px-1 py-0 ml-3 transform scale-75 -translate-y-3;
+}

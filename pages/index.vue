@@ -25,14 +25,6 @@
             >
               See more
             </nuxt-link>
-            <nuxt-link
-              :to="{ path: '/cadastro' }"
-              class="block w-32 h-10 min-h-0 px-4 py-2 mx-auto font-bold text-center capitalize bg-transparent border rounded shadow-md border-brand-leaf text-brand-leaf hover:border-brand-green hover:text-brand-green"
-              type="button"
-              role="button"
-            >
-              Nova Pagina
-            </nuxt-link>
           </div>
         </div>
       </div>
@@ -160,18 +152,24 @@
     <section id="contact" class="bg-green-100">
       <div class="container mx-auto">
         <div
-          class="grid items-center grid-cols-1 gap-8 py-16 lg:grid-cols-2 lg:py-20"
+          class="grid items-center grid-cols-1 gap-8 py-16 lg:grid-cols-1 lg:py-20"
         >
           <div>
             <h1 class="mb-8 text-2xl font-bold text-grey-400 lg:text-4xl">
-              Ready for a talk?
+              Cadastro de Intenção
             </h1>
             <h3 class="mb-6 text-base text-grey-400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vel enim
-              metus orci urna, venenatis auctor venenatis. Quam faucibus cras
-              enim, tincidunt eu nunc proin. Ac lectus magna cras at in sit.
-              Ullamcorper id mauris nibh ultrices dignissim feugiat volutpat
-              diam tortor.
+              A Coopesol Leste e a Rede Lixo Zero Santa Tereza propõe a
+              realização de uma coleta que seja segura e sustentável, a partir
+              de uma nova forma de organização das rotas🚚. Para isso, estamos
+              construindo uma alternativa com os moradores dos bairros da
+              Regional Leste 🙋🏽‍♀️🙋🏽‍♂️🤝🏽.
+              <p>
+                Quem tiver interesse pela coleta seletiva, pedimos que preencha
+                esse breve formulário ✍🏽. Nossa proposta inicial é formar rotas
+                quinzenais com grupos de pessoas que moram próximas umas as
+                outras.
+              </p>
             </h3>
           </div>
           <div class="p-8 bg-white rounded-lg shadow">
@@ -191,7 +189,7 @@
                 <label
                   for="name"
                   class="absolute top-0 p-4 text-sm duration-300 bg-white -z-1 origin-0"
-                  >Nome</label
+                  >Nome Completo</label
                 >
               </div>
               <div
@@ -215,34 +213,240 @@
               <div
                 class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
               >
-                <textarea
-                  v-model="contact.message"
-                  name="message"
-                  rows="5"
+                <input
+                  v-model="contact.celular"
+                  type="text"
+                  name="celular"
+                  maxlength="15"
                   autocomplete="off"
-                  placeholder="Digite uma mensagem"
+                  placeholder="Celular"
+                  required
                   class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
-                ></textarea>
+                />
                 <label
-                  for="message"
+                  for="celular"
                   class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
-                  >Digite uma mensagem</label
+                  >Celular</label
                 >
               </div>
+              <div
+                class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
+              >
+                <input
+                  v-model="contact.bairro"
+                  type="text"
+                  name="bairro"
+                  maxlength="15"
+                  autocomplete="off"
+                  placeholder="Bairro"
+                  required
+                  class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+                />
+                <label
+                  for="bairro"
+                  class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
+                  >Bairro</label
+                >
+              </div>
+              <section>
+                <strong>Para onde você deseja a coleta?</strong>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.coletaOnde"
+                    type="radio"
+                    name="coletaOnde"
+                    autocomplete="off"
+                    value="0"
+                    required
+                  />
+                  Para sua casa
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.coletaOnde"
+                    type="radio"
+                    name="coletaOnde"
+                    autocomplete="off"
+                    value="1"
+                    required
+                  />
+                  Para seu apartamento
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.coletaOnde"
+                    type="radio"
+                    name="coletaOnde"
+                    autocomplete="off"
+                    value="2"
+                    required
+                  />
+                  Para seu prédio (marque essa opção caso existam pelo menos
+                  quatro aptos interessados em seu prédio)
+                </div>
+              </section>
+              <section>
+                <strong
+                  >Você participa do Programa Lixo Zero Residencial da Rede Lixo
+                  Zero Santa Tereza?</strong
+                >
+
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.jaParticipaDaColeta"
+                    type="radio"
+                    name="jaParticipaDaColeta"
+                    autocomplete="off"
+                    value="1"
+                    required
+                  />
+                  Sim
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.jaParticipaDaColeta"
+                    type="radio"
+                    name="jaParticipaDaColeta"
+                    autocomplete="off"
+                    value="0"
+                    required
+                  />
+                  Não
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.jaParticipaDaColeta"
+                    type="radio"
+                    name="jaParticipaDaColeta"
+                    autocomplete="off"
+                    value="2"
+                    required
+                  />
+                  Não sei dizer
+                </div>
+              </section>
+              <section>
+                <strong>Como ficou sabendo da Coleta de Vizinhança?</strong>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.comoFicouSabendo"
+                    type="radio"
+                    name="comoFicouSabendo"
+                    autocomplete="off"
+                    value="0"
+                    required
+                  />
+                  Amigos(as)
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.comoFicouSabendo"
+                    type="radio"
+                    name="comoFicouSabendo"
+                    autocomplete="off"
+                    value="1"
+                    required
+                  />
+                  Vizinho(as)
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.comoFicouSabendo"
+                    type="radio"
+                    name="comoFicouSabendo"
+                    autocomplete="off"
+                    value="2"
+                    required
+                  />
+                  Facebook
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.comoFicouSabendo"
+                    type="radio"
+                    name="comoFicouSabendo"
+                    autocomplete="off"
+                    value="3"
+                    required
+                  />
+                  Instagram
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.comoFicouSabendo"
+                    type="radio"
+                    name="comoFicouSabendo"
+                    autocomplete="off"
+                    value="4"
+                    required
+                  />
+                  Portal Santa Tereza Tem
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.comoFicouSabendo"
+                    type="radio"
+                    name="comoFicouSabendo"
+                    autocomplete="off"
+                    value="5"
+                    required
+                  />
+                  Youtube
+                </div>
+                <div
+                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.comoFicouSabendo"
+                    type="radio"
+                    name="comoFicouSabendo"
+                    autocomplete="off"
+                    value="6"
+                    required
+                  />
+                  Outro:
+                </div>
+              </section>
               <button
                 class="block h-12 min-h-0 px-6 mx-auto mt-8 font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
                 type="submit"
                 role="button"
                 @click.prevent="sendPostRequest"
               >
-                Enviar
+                Cadastrar
               </button>
             </form>
             <div v-if="sent" class="p-4 mt-4 bg-green-100 rounded-lg">
               <p class="text-sm text-center text-green-500">Sucesso!</p>
             </div>
             <div v-if="error" class="p-4 bg-red-100 rounded-lg">
-              <p class="text-sm text-center text-red-500">{{ error }}</p>
+              <p class="text-sm text-center text-red-500">
+                {{ error }}
+              </p>
             </div>
           </div>
         </div>
@@ -259,7 +463,10 @@ export default Vue.extend({
       contact: {
         name: '',
         email: '',
-        message: '',
+        celular: '',
+        coletaOnde: '',
+        jaParticipaDaColeta: '',
+        comoFicouSabendo: '',
       },
       sent: false,
       error: '',
@@ -278,7 +485,7 @@ export default Vue.extend({
           }
         }
       } catch (err) {
-        this.error = `${err.status} There was an error saving your contact`
+        this.error = ` There was an error saving your contact`
       }
     },
   },

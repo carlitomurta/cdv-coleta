@@ -7,5 +7,19 @@
 <style scoped></style>
 
 <script>
-export default {}
+import Vue from 'vue';
+
+export default Vue.extend({
+
+ data(){
+     return {
+         cadastro:{
+
+         }
+     }
+ },
+ mounted(){
+     alert('Ok');
+ }
+});
 </script>

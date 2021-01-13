@@ -1,8 +1,31 @@
 <template>
   <div>
     <section>
-      <div class="container mx-auto">
-        <div class="items-center justify-between block py-16 lg:py-40 lg:flex">
+      <div class="container py-8 mx-auto lg:py-12">
+        <VueSlickCarousel :arrows="true" :dots="true">
+          <div>
+            <img
+              src="~/static/1.jpg"
+              class="object-cover w-full mx-auto h-96"
+              alt="1"
+            />
+          </div>
+          <div>
+            <img
+              src="~/static/2.jpg"
+              class="object-cover w-full mx-auto h-96"
+              alt="1"
+            />
+          </div>
+          <div>
+            <img
+              src="~/static/3.jpg"
+              class="object-cover w-full mx-auto h-96"
+              alt="1"
+            />
+          </div>
+        </VueSlickCarousel>
+        <!-- <div class="items-center justify-between block py-16 lg:py-40 lg:flex">
           <div class="w-auto mx-auto mb-4 lg:w-2/3">
             <h1 class="mb-4 text-2xl text-center lg:text-4xl text-brand-green">
               <span class="font-bold">Better</span>
@@ -17,7 +40,6 @@
               fun along the way.
             </h3>
             <nuxt-link
-              v-scroll-to="{ el: '#contact' }"
               :to="{ path: '/', hash: 'contact' }"
               class="block w-32 h-10 min-h-0 px-4 py-2 mx-auto font-bold text-center capitalize bg-transparent border rounded shadow-md border-brand-leaf text-brand-leaf hover:border-brand-green hover:text-brand-green"
               type="button"
@@ -26,7 +48,7 @@
               See more
             </nuxt-link>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
 
@@ -52,7 +74,6 @@
               founders.
             </h3>
             <nuxt-link
-              v-scroll-to="{ el: '#contact' }"
               :to="{ path: '/', hash: 'contact' }"
               class="h-10 min-h-0 px-4 py-2 font-bold text-center text-white capitalize bg-transparent border border-white rounded shadow-md base-button hover:border-grey-400 hover:text-grey-400"
               type="button"
@@ -245,7 +266,11 @@
 
 <script>
 import Vue from 'vue'
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 export default Vue.extend({
+  components: { VueSlickCarousel },
   data() {
     return {
       contact: {

@@ -13,14 +13,12 @@
         </nuxt-link>
         <div class="flex items-center">
           <nuxt-link
-            v-scroll-to="{ el: '#about' }"
             :to="{ path: '/', hash: 'about' }"
             class="h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white hover:bg-grey-100 text-grey-400"
           >
             Sobre
           </nuxt-link>
           <nuxt-link
-            v-scroll-to="{ el: '#contact' }"
             :to="{ path: '/', hash: 'contact' }"
             class="h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white hover:bg-grey-100 text-grey-400"
           >
@@ -29,6 +27,12 @@
            <nuxt-link
             :to="{ path: '/login' }"
             class="h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white hover:bg-grey-100 text-grey-400"
+          >
+            Login
+          </nuxt-link>
+          <nuxt-link
+            :to="{ path: '/login' }"
+            class="h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white hover:bg-grey-100 hover:underline text-grey-400"
           >
             Login
           </nuxt-link>

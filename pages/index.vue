@@ -417,8 +417,9 @@
                   />
                   Youtube
                 </div>
+
                 <div
-                  class="relative mb-4 outline border-grey-200 focus-within:border-black"
+                  class="relative mb-4 border-grey-200 focus-within:border-black"
                 >
                   <input
                     v-model="contact.comoFicouSabendo"
@@ -429,6 +430,19 @@
                     required
                   />
                   Outro:
+                </div>
+                <div
+                  v-if="contact.comoFicouSabendo == 6"
+                  class="relative mb-4 border-2 rounded-lg border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="contact.outro"
+                    type="text"
+                    name="outro"
+                    autocomplete="off"
+                    required
+                    class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+                  />
                 </div>
               </section>
               <button
@@ -443,7 +457,7 @@
             <div v-if="sent" class="p-4 mt-4 bg-green-100 rounded-lg">
               <p class="text-sm text-center text-green-500">Sucesso!</p>
             </div>
-            <div v-if="error" class="p-4 bg-red-100 rounded-lg">
+            <div v-if="error" class="p-4 mt-4 bg-red-100 rounded-lg">
               <p class="text-sm text-center text-red-500">
                 {{ error }}
               </p>
@@ -454,6 +468,12 @@
     </section>
   </div>
 </template>
+
+<style scoped>
+.input-md {
+  max-width: 500px;
+}
+</style>
 
 <script>
 import Vue from 'vue'
@@ -467,6 +487,7 @@ export default Vue.extend({
         coletaOnde: '',
         jaParticipaDaColeta: '',
         comoFicouSabendo: '',
+        outro: '',
       },
       sent: false,
       error: '',
@@ -474,18 +495,32 @@ export default Vue.extend({
   },
   methods: {
     async sendPostRequest() {
-      try {
-        if (this.contact.name && this.contact.email) {
+      if (
+        !this.contact.name ||
+        !this.contact.email ||
+        !this.contact.celular ||
+        !this.contact.coletaOnde ||
+        !this.contact.jaParticipaDaColeta ||
+        !this.contact.comoFicouSabendo
+      )
+        this.error = 'Atenção, você deve informar todos os campos. ;)'
+      else {
+        this.error = ''
+        try {
           await this.$axios.post('contact', this.contact)
           this.sent = true
           this.contact = {
             name: '',
             email: '',
-            message: '',
+            celular: '',
+            coletaOnde: '',
+            jaParticipaDaColeta: '',
+            comoFicouSabendo: '',
+            outro: '',
           }
+        } catch (err) {
+          this.error = err
         }
-      } catch (err) {
-        this.error = ` There was an error saving your contact`
       }
     },
   },

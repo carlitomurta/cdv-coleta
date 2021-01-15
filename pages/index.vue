@@ -2,53 +2,34 @@
   <div>
     <section>
       <div class="container py-8 mx-auto lg:py-12">
-        <VueSlickCarousel :arrows="true" :dots="true">
+        <VueSlickCarousel
+          :arrows="false"
+          :dots="true"
+          :autoplay="true"
+          :speed="500"
+        >
           <div>
             <img
               src="~/static/1.jpg"
-              class="object-cover w-full mx-auto h-96"
+              class="object-cover img-carousel w-full mx-auto h-96"
               alt="1"
             />
           </div>
           <div>
             <img
               src="~/static/2.jpg"
-              class="object-cover w-full mx-auto h-96"
+              class="object-cover img-carousel w-full mx-auto h-96"
               alt="1"
             />
           </div>
           <div>
             <img
               src="~/static/3.jpg"
-              class="object-cover w-full mx-auto h-96"
+              class="object-cover img-carousel w-full mx-auto h-96"
               alt="1"
             />
           </div>
         </VueSlickCarousel>
-        <!-- <div class="items-center justify-between block py-16 lg:py-40 lg:flex">
-          <div class="w-auto mx-auto mb-4 lg:w-2/3">
-            <h1 class="mb-4 text-2xl text-center lg:text-4xl text-brand-green">
-              <span class="font-bold">Better</span>
-              teams.
-              <span class="font-bold">Better</span>
-              software<br />
-              Exceptional
-              <span class="font-bold">growth</span>.
-            </h1>
-            <h3 class="mb-6 text-base text-center lg:text-lg text-brand-green">
-              We are here to help you create and operate great software and have
-              fun along the way.
-            </h3>
-            <nuxt-link
-              :to="{ path: '/', hash: 'contact' }"
-              class="block w-32 h-10 min-h-0 px-4 py-2 mx-auto font-bold text-center capitalize bg-transparent border rounded shadow-md border-brand-leaf text-brand-leaf hover:border-brand-green hover:text-brand-green"
-              type="button"
-              role="button"
-            >
-              See more
-            </nuxt-link>
-          </div>
-        </div> -->
       </div>
     </section>
 
@@ -494,6 +475,11 @@
 .input-md {
   max-width: 500px;
 }
+
+.img-carousel {
+  border-radius: 1%;
+  box-shadow: 3px 3px 1px #bbbb;
+}
 </style>
 
 <script>
@@ -501,6 +487,7 @@ import Vue from 'vue'
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+
 export default Vue.extend({
   components: { VueSlickCarousel },
   data() {

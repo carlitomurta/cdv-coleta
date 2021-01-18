@@ -48,33 +48,40 @@
               Sobre Nós
             </h1>
             <h3 class="mb-6 text-base text-white lg:text-xl">
-              We are a distributed team with developers in the United States and
-              Brazil. We specialize in architecture, networking, consulting and
-              providing development resources for cloud software. We are happy
-              to work with developers, hiring managers, product owners and
-              founders.
+              Você é morador(a) da Regional Leste e tem encontrado dificuldade
+              para destinar seus recicláveis na quarentena?♻️🤔 A Coopesol Leste
+              e a Rede Lixo Zero Santa Tereza propõe a realização de uma coleta
+              que seja segura e sustentável, a partir de uma nova forma de
+              organização das rotas🚚. Para isso, estamos construindo uma
+              alternativa com os moradores dos bairros da Regional Leste
+              🙋🏽‍♀️🙋🏽‍♂️🤝🏽.
             </h3>
             <nuxt-link
-              :to="{ path: '/', hash: 'contact' }"
+              :to="{ path: '/', hash: 'planos' }"
               class="h-10 min-h-0 px-4 py-2 font-bold text-center text-white capitalize bg-transparent border border-white rounded shadow-md base-button hover:border-grey-400 hover:text-grey-400"
               type="button"
               role="button"
             >
-              See more
+              Saiba mais
             </nuxt-link>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="bg-green-200">
+    <section id="planos" class="bg-green-200">
       <div class="container mx-auto">
         <div class="py-16 lg:py-20">
           <h1
             class="mb-12 text-2xl text-center font-head text-grey-400 lg:text-4xl"
           >
-            O Que Fazemos
+            Nossos Planos
           </h1>
+          <h3 class="mb-6 text-base text-grey-400">
+            O custo da coleta será compartilhado entre a cooperativa e os
+            interessados. Quanto mais pessoas aderirem em seu bairro, menor será
+            a contribuição por cada residência. Esse valor pode variar entre:
+          </h3>
           <div class="justify-center lg:flex">
             <div class="p-8 mb-8 bg-white shadow lg:mr-8 rounded-xl lg:mb-0">
               <img
@@ -83,33 +90,43 @@
                 alt="Consulting Icon"
               />
               <h4 class="mt-6 text-base font-bold text-center text-grey-400">
-                Software Consulting
+                Plano I
               </h4>
               <p
                 class="mt-4 text-sm text-center text-grey-300 dark:text-grey-200"
               >
-                We help you to improve your software or your solution
+                Ideal para menos de 40 residências
               </p>
               <ul
                 class="table mx-auto mt-6 list-disc list-inside text-brand-red"
               >
                 <li>
-                  <span class="font-bold text-grey-400">Proof of Concept</span>
+                  <span class="font-bold text-grey-400">R$ 20,00/mês</span>
                 </li>
                 <li>
                   <span class="font-bold text-grey-400"
-                    >Continuous Delivery</span
+                    >Horário de recolhimento</span
                   >
                 </li>
                 <li>
                   <span class="font-bold text-grey-400"
-                    >Software Architecture</span
+                    >Formas de pagamento</span
                   >
                 </li>
                 <li>
-                  <span class="font-bold text-grey-400">Cloud Strategy</span>
+                  <span class="font-bold text-grey-400"
+                    >Dicas de armazenagem</span
+                  >
                 </li>
               </ul>
+              <div>
+                <nuxt-link
+                  :to="{ path: '/login' }"
+                  class="block h-6 min-h-0 px-10 mx-auto mt-4 text-center text-white capitalize rounded shadow-md bg-brand-green"
+                >
+                  Contratar
+                </nuxt-link>
+              </div>
             </div>
             <div class="p-8 bg-white shadow rounded-xl lg:mb-0">
               <img
@@ -118,35 +135,43 @@
                 alt="Staff Icon"
               />
               <h4 class="mt-6 text-base font-bold text-center text-grey-400">
-                Staff Augmentation
+                Plano II
               </h4>
               <p class="mt-4 text-sm text-center text-grey-300">
-                We meet and hire the best team for your next project
+                Ideal para 40 residências ou mais
               </p>
               <ul
                 class="table mx-auto mt-6 list-disc list-inside text-brand-red"
               >
                 <li>
-                  <span class="font-bold text-grey-400">UI & UX Design</span>
-                </li>
-                <li>
-                  <span class="font-bold text-grey-400">Production & QA</span>
+                  <span class="font-bold text-grey-400">R$ 15,00/mês</span>
                 </li>
                 <li>
                   <span class="font-bold text-grey-400"
-                    >IT & Security Compliance</span
+                    >Horário de recolhimento</span
+                  >
+                </li>
+                <li>
+                  <span class="font-bold text-grey-400"
+                    >Formas de pagamento</span
+                  >
+                </li>
+                <li>
+                  <span class="font-bold text-grey-400"
+                    >Dicas de armazenagem</span
                   >
                 </li>
               </ul>
+              <div>
+                <nuxt-link
+                  :to="{ path: '/login' }"
+                  class="block h-6 min-h-0 px-10 mx-auto mt-4 text-center text-white capitalize rounded shadow-md bg-brand-green"
+                >
+                  Contratar
+                </nuxt-link>
+              </div>
             </div>
           </div>
-          <!-- <button
-            class="block h-12 min-h-0 px-6 mx-auto font-bold text-center capitalize bg-yellow-400 rounded shadow-md base-button text-grey-400 hover:bg-yellow-500"
-            type="button"
-            role="button"
-          >
-            {{ $t('letsTalk') }}
-          </button> -->
         </div>
       </div>
     </section>
@@ -158,7 +183,7 @@
         >
           <div>
             <h1 class="mb-8 text-2xl font-bold text-grey-400 lg:text-4xl">
-              Cadastro de Intenção
+              Faça Contato Conosco
             </h1>
             <h3 class="mb-6 text-base text-grey-400">
               A Coopesol Leste e a Rede Lixo Zero Santa Tereza propõe a
@@ -180,16 +205,16 @@
                 class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
               >
                 <input
-                  v-model="contact.name"
+                  v-model="contact.nome"
                   type="text"
-                  name="name"
+                  name="nome"
                   autocomplete="off"
                   required
                   placeholder="Nome"
                   class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
                 />
                 <label
-                  for="name"
+                  for="nome"
                   class="absolute top-0 p-4 text-sm duration-300 bg-white -z-1 origin-0"
                   >Nome Completo</label
                 >
@@ -256,9 +281,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.coletaOnde"
+                    v-model="contact.DesejoDaColeta"
                     type="radio"
-                    name="coletaOnde"
+                    name="DesejoDaColeta"
                     autocomplete="off"
                     value="0"
                     required
@@ -269,9 +294,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.coletaOnde"
+                    v-model="contact.DesejoDaColeta"
                     type="radio"
-                    name="coletaOnde"
+                    name="DesejoDaColeta"
                     autocomplete="off"
                     value="1"
                     required
@@ -282,9 +307,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.coletaOnde"
+                    v-model="contact.DesejoDaColeta"
                     type="radio"
-                    name="coletaOnde"
+                    name="DesejoDaColeta"
                     autocomplete="off"
                     value="2"
                     required
@@ -303,9 +328,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.jaParticipaDaColeta"
+                    v-model="contact.ParticipaDoProgramaLixoZero"
                     type="radio"
-                    name="jaParticipaDaColeta"
+                    name="ParticipaDoProgramaLixoZero"
                     autocomplete="off"
                     value="1"
                     required
@@ -316,9 +341,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.jaParticipaDaColeta"
+                    v-model="contact.ParticipaDoProgramaLixoZero"
                     type="radio"
-                    name="jaParticipaDaColeta"
+                    name="ParticipaDoProgramaLixoZero"
                     autocomplete="off"
                     value="0"
                     required
@@ -329,9 +354,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.jaParticipaDaColeta"
+                    v-model="contact.ParticipaDoProgramaLixoZero"
                     type="radio"
-                    name="jaParticipaDaColeta"
+                    name="ParticipaDoProgramaLixoZero"
                     autocomplete="off"
                     value="2"
                     required
@@ -345,9 +370,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.comoFicouSabendo"
+                    v-model="contact.ComoFicouSabendoDaColetaDeVizinhanca"
                     type="radio"
-                    name="comoFicouSabendo"
+                    name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
                     value="0"
                     required
@@ -358,9 +383,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.comoFicouSabendo"
+                    v-model="contact.ComoFicouSabendoDaColetaDeVizinhanca"
                     type="radio"
-                    name="comoFicouSabendo"
+                    name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
                     value="1"
                     required
@@ -371,9 +396,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.comoFicouSabendo"
+                    v-model="contact.ComoFicouSabendoDaColetaDeVizinhanca"
                     type="radio"
-                    name="comoFicouSabendo"
+                    name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
                     value="2"
                     required
@@ -384,9 +409,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.comoFicouSabendo"
+                    v-model="contact.ComoFicouSabendoDaColetaDeVizinhanca"
                     type="radio"
-                    name="comoFicouSabendo"
+                    name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
                     value="3"
                     required
@@ -397,9 +422,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.comoFicouSabendo"
+                    v-model="contact.ComoFicouSabendoDaColetaDeVizinhanca"
                     type="radio"
-                    name="comoFicouSabendo"
+                    name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
                     value="4"
                     required
@@ -410,9 +435,9 @@
                   class="relative mb-4 outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.comoFicouSabendo"
+                    v-model="contact.ComoFicouSabendoDaColetaDeVizinhanca"
                     type="radio"
-                    name="comoFicouSabendo"
+                    name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
                     value="5"
                     required
@@ -424,9 +449,9 @@
                   class="relative mb-4 border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.comoFicouSabendo"
+                    v-model="contact.ComoFicouSabendoDaColetaDeVizinhanca"
                     type="radio"
-                    name="comoFicouSabendo"
+                    name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
                     value="6"
                     required
@@ -434,13 +459,13 @@
                   Outro:
                 </div>
                 <div
-                  v-if="contact.comoFicouSabendo == 6"
+                  v-if="contact.ComoFicouSabendoDaColetaDeVizinhanca == 6"
                   class="relative mb-4 border-2 rounded-lg border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="contact.outro"
+                    v-model="contact.ComoFicouSabendoOutro"
                     type="text"
-                    name="outro"
+                    name="ComoFicouSabendoOutro"
                     autocomplete="off"
                     required
                     class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
@@ -457,7 +482,9 @@
               </button>
             </form>
             <div v-if="sent" class="p-4 mt-4 bg-green-100 rounded-lg">
-              <p class="text-sm text-center text-green-500">Sucesso!</p>
+              <p class="text-sm text-center text-green-500">
+                Sucesso! Recebemos seu cadastro, em breve faremos contato.
+              </p>
             </div>
             <div v-if="error" class="p-4 mt-4 bg-red-100 rounded-lg">
               <p class="text-sm text-center text-red-500">
@@ -482,6 +509,27 @@
 }
 </style>
 
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+  apiKey: 'AIzaSyCOzvBSowJpO0XUQx4SPtXDM-BEWUEQHcY',
+  authDomain: 'coleta-seletiva-leste.firebaseapp.com',
+  projectId: 'coleta-seletiva-leste',
+  storageBucket: 'coleta-seletiva-leste.appspot.com',
+  messagingSenderId: '704258378401',
+  appId: '1:704258378401:web:e41785dd50619b6b557ee0',
+}
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig)
+</script>
+
 <script>
 import Vue from 'vue'
 import VueSlickCarousel from 'vue-slick-carousel'
@@ -493,13 +541,14 @@ export default Vue.extend({
   data() {
     return {
       contact: {
-        name: '',
+        nome: '',
         email: '',
         celular: '',
-        coletaOnde: '',
-        jaParticipaDaColeta: '',
-        comoFicouSabendo: '',
-        outro: '',
+        bairro: '',
+        DesejoDaColeta: '',
+        ParticipaDoProgramaLixoZero: '',
+        ComoFicouSabendoDaColetaDeVizinhanca: '',
+        ComoFicouSabendoOutro: '',
       },
       sent: false,
       error: '',
@@ -508,27 +557,33 @@ export default Vue.extend({
   methods: {
     async sendPostRequest() {
       if (
-        !this.contact.name ||
+        !this.contact.nome ||
         !this.contact.email ||
         !this.contact.celular ||
-        !this.contact.coletaOnde ||
-        !this.contact.jaParticipaDaColeta ||
-        !this.contact.comoFicouSabendo
+        !this.contact.bairro ||
+        !this.contact.DesejoDaColeta ||
+        !this.contact.ParticipaDoProgramaLixoZero ||
+        !this.contact.ComoFicouSabendoDaColetaDeVizinhanca
       )
         this.error = 'Atenção, você deve informar todos os campos. ;)'
       else {
         this.error = ''
+        console.log(this.contact)
         try {
-          await this.$axios.post('contact', this.contact)
+          await this.$axios.post(
+            'http://localhost:53495/coleta-seletiva/v1/clientes/intencao',
+            this.contact
+          )
           this.sent = true
           this.contact = {
-            name: '',
+            nome: '',
             email: '',
             celular: '',
-            coletaOnde: '',
-            jaParticipaDaColeta: '',
-            comoFicouSabendo: '',
-            outro: '',
+            bairro: '',
+            DesejoDaColeta: '',
+            ParticipaDoProgramaLixoZero: '',
+            ComoFicouSabendoDaColetaDeVizinhanca: '',
+            ComoFicouSabendoOutro: '',
           }
         } catch (err) {
           this.error = err

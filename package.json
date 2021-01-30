@@ -16,6 +16,7 @@
         "@nuxtjs/svg": "^0.1.12",
         "core-js": "^3.6.5",
         "nuxt": "^2.14.6",
+        "vue-js-modal": "^2.0.0-rc.6",
         "vue-slick-carousel": "^1.0.6"
     },
     "devDependencies": {

@@ -1,7 +1,7 @@
 {
   "name": "cdv",
   "short_name": "cdv",
-  "description": "```bash\r # install dependencies\r $ yarn install",
+  "description": "## Build Setup",
   "icons": [
     {
       "src": "/_nuxt/icons/icon_64x64.4ec741.png",

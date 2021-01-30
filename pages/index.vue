@@ -48,41 +48,68 @@
               Sobre Nós
             </h1>
             <h3 class="mb-6 text-base text-white lg:text-xl">
-              Você é morador(a) da Regional Leste e tem encontrado dificuldade
-              para destinar seus recicláveis na quarentena?♻️🤔 A Coopesol Leste
-              e a Rede Lixo Zero Santa Tereza propõe a realização de uma coleta
-              que seja segura e sustentável, a partir de uma nova forma de
-              organização das rotas🚚. Para isso, estamos construindo uma
-              alternativa com os moradores dos bairros da Regional Leste
-              🙋🏽‍♀️🙋🏽‍♂️🤝🏽.
+              A Coleta de Vizinhança é uma proposta para gestão comunitária e
+              seletiva dos resíduos, fruto da parceria entre a Coopesol Leste a
+              Rede Lixo Zero. Pretendemos oferecer um serviço de coleta
+              seletiva: acessível aos moradores da região leste de Belo
+              Horizonte economicamente sustentável para as cooperativas de
+              catadores seguro, pela redução de quaisquer riscos de contaminação
+              no trabalho (Botão indicando o campo das medidas de segurança)
+              <p>
+                Nossa principal ferramenta é a cooperação entre vizinhos e
+                catadores. Quando a vizinhança se junta, o trabalho dos
+                catadores melhora. Quando o trabalho dos catadores melhora, o
+                bem viver é sustentável em vizinhança.
+              </p>
             </h3>
             <nuxt-link
-              :to="{ path: '/', hash: 'planos' }"
+              :to="{ path: '/', hash: 'como-funciona' }"
               class="h-10 min-h-0 px-4 py-2 font-bold text-center text-white capitalize bg-transparent border border-white rounded shadow-md base-button hover:border-grey-400 hover:text-grey-400"
               type="button"
               role="button"
             >
-              Saiba mais
+              Quer saber como funciona?
             </nuxt-link>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="planos" class="bg-green-200">
+    <section id="como-funciona" class="bg-green-200">
       <div class="container mx-auto">
         <div class="py-16 lg:py-20">
           <h1
             class="mb-12 text-2xl text-center font-head text-grey-400 lg:text-4xl"
           >
-            Nossos Planos
+            Como Funciona?
           </h1>
           <h3 class="mb-6 text-base text-grey-400">
-            O custo da coleta será compartilhado entre a cooperativa e os
-            interessados. Quanto mais pessoas aderirem em seu bairro, menor será
-            a contribuição por cada residência. Esse valor pode variar entre:
+            <p>
+              a) a coleta é quinzenal e o dia da semana é definido com entre a
+              cooperativas e os vizinhos.
+            </p>
+            <p>
+              b) o material é recolhido na porta da sua casa ou do seu prédio.
+            </p>
+            <p>
+              c) para tirar duvidas, trocar impressões e acompanhar a rota, cada
+              vizinhança tem um grupo de whatsap.
+            </p>
+            <p>
+              d) a contribuição mensal por residência é de R$ 20,00. Com ele,
+              pagamos os custos de logística e remuneramos os catadores da
+              Coopesol Leste.
+            </p>
+            <p>
+              e) na adesão de 40 residências em uma vizinhança, o valor cai para
+              R$ 15,00.
+            </p>
+            <p>
+              f) na adesão de vários apartamentos em um mesmo prédio,
+              conseguimos um desconto de 30% para as residências.
+            </p>
           </h3>
-          <div class="justify-center lg:flex">
+          <!-- <div class="justify-center lg:flex">
             <div class="p-8 mb-8 bg-white shadow lg:mr-8 rounded-xl lg:mb-0">
               <img
                 class="h-20 mx-auto lg:h-24"
@@ -171,7 +198,19 @@
                 </nuxt-link>
               </div>
             </div>
-          </div>
+          </div> -->
+        </div>
+        <div
+          class="grid items-center grid-cols-1 gap-8 py-10 lg:grid-cols-1 lg:py-20"
+        >
+          <button
+            class="block h-12 min-h-0 px-10 mx-auto mt-0 font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+            type="button"
+            role="button"
+            @click.prevent="toLogin"
+          >
+            Quer participar?
+          </button>
         </div>
       </div>
     </section>
@@ -183,7 +222,7 @@
         >
           <div>
             <h1 class="mb-8 text-2xl font-bold text-grey-400 lg:text-4xl">
-              Faça Contato Conosco
+              Medidas de Segurança
             </h1>
             <h3 class="mb-6 text-base text-grey-400">
               A Coopesol Leste e a Rede Lixo Zero Santa Tereza propõe a
@@ -511,7 +550,9 @@
 
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"
+integrity="sha384-4a49655bac2f84b11b52fff1661ed50d7f53726f5b60289497c0a1afd738592a4066d5681a8dc4cc27052550d863229e"
+crossorigin="anonymous"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -589,6 +630,9 @@ export default Vue.extend({
           this.error = err
         }
       }
+    },
+    async toLogin() {
+      this.$router.push({ name: 'login' })
     },
   },
 })

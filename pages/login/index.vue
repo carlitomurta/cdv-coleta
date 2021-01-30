@@ -45,7 +45,7 @@
             </div>
 
             <button
-              class="block h-12 min-h-0 px-10 mx-auto mt-8 font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+              class="block h-12 min-h-2 px-10 mx-auto mt-8 font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
               type="submit"
               role="button"
               @click.prevent="sendPostRequest"
@@ -54,12 +54,13 @@
             </button>
           </form>
           <div>
-            <a
-              class="block h-12 min-h-0 px-10 mx-auto text-center text-blue"
-              href="#"
+            <button
+              class="block h-12 min-h-0 px-10 mx-auto font-bold text-center capitalize rounded-lg dark:text-white hover:bg-grey-100 text-grey-400"
+              role="button"
               @click="showModal"
-              >Ainda não tenho cadastro</a
             >
+              Cadastrar
+            </button>
           </div>
         </div>
       </div>

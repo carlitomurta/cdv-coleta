@@ -48,7 +48,7 @@
               class="block h-12 min-h-2 px-10 mx-auto mt-8 font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
               type="submit"
               role="button"
-              @click.prevent="sendPostRequest"
+              @click.prevent="logar"
             >
               Login
             </button>
@@ -61,6 +61,15 @@
             >
               Cadastrar
             </button>
+          </div>
+          <div v-if="error" class="p-2 mt-1 bg-red-100 rounded-lg">
+            <p
+              v-for="err in error"
+              :key="err.descricao"
+              class="text-sm text-center text-red-500"
+            >
+              {{ err.descricao }}
+            </p>
           </div>
         </div>
       </div>
@@ -154,7 +163,7 @@
               class="block h-12 min-h-0 px-6 mx-auto mt-8 font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
               type="submit"
               role="button"
-              @click.prevent="sendPostRequest"
+              @click.prevent="cadastrarELogin"
             >
               Cadastrar
             </button>
@@ -221,7 +230,7 @@ export default Vue.extend({
       this.clearCadastro()
       this.$modal.show('modal-cadastro')
     },
-    async sendPostRequest() {
+    async cadastrarELogin() {
       if (
         !this.cadastro.nome ||
         !this.cadastro.email ||
@@ -246,6 +255,14 @@ export default Vue.extend({
           .catch((err) => {
             this.error = err.response.data
           })
+      }
+    },
+    async logar() {
+      this.error = ''
+      if (!this.login.senha || !this.login.email) {
+        this.error = [
+          { descricao: 'Atenção, você deve informar todos os campos. ;)' },
+        ]
       }
     },
   },

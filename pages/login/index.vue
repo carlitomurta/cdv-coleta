@@ -202,6 +202,9 @@
 import Vue from 'vue'
 
 export default Vue.extend({
+  beforeMount() {
+    localStorage.clear()
+  },
   data() {
     return {
       login: {
@@ -248,9 +251,10 @@ export default Vue.extend({
         this.error = ''
         await this.$axios
           .post('usuarios', this.cadastro)
-          .then(() => {
-            this.sent = true
+          .then((res) => {
             this.clearCadastro()
+            localStorage.setItem('cdv', JSON.stringify(res.data))
+            this.$router.push({ name: 'area-logada' })
           })
           .catch((err) => {
             this.error = err.response.data

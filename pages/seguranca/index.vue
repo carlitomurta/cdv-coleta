@@ -58,11 +58,13 @@
               sorvetes... cadeira de plástico quebrada ou mesa, potes quebrados,
               canudinhos, brinquedos quebrados, desodorante rollon... vaso de
               planta de plástico, tampinhas de garrafa em geral, tampinhas de
-              cremes e tampinha de pomadas... ⛓️ Metal : latinhas de cerveja ou
-              refri, lata de conserva em geral, lata de leite em pó ou
-              achocolatado, panela velha, marmitex de alumínio (limpo),
-              desodorante spray e qualquer embalagem aerossol, sprays em geral,
-              lata de tinta vazia
+              cremes e tampinha de pomadas...
+            </p>
+            <p>
+              ⛓️ Metal : latinhas de cerveja ou refri, lata de conserva em
+              geral, lata de leite em pó ou achocolatado, panela velha, marmitex
+              de alumínio (limpo), desodorante spray e qualquer embalagem
+              aerossol, sprays em geral, lata de tinta vazia
             </p>
             <p>
               🍾 Vidro : garrafas em geral, vidros de perfume, vidros de

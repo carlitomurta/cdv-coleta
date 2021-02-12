@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>Área Logada do usuário</h3>
-    <h3>Bem vindo {{ token.nome }}</h3>
+    <h3>Bem vindo {{ nomeCliente }}</h3>
   </div>
 </template>
 
@@ -12,19 +12,28 @@
 import Vue from 'vue'
 export default Vue.extend({
   beforeMount() {
-    var token = localStorage.getItem('cdv')
-    console.log(token)
-    if (token == null || token == undefined) this.$router.push((name = '/'))
-
-    obterDadosToken()
+    let tokenStorage = JSON.parse(sessionStorage.getItem('cdv'))
+    if (
+      tokenStorage == null ||
+      tokenStorage.token == null ||
+      tokenStorage.token == undefined
+    )
+      this.$router.push((name = '/'))
   },
+
   data() {
-    return {}
+    return {
+      nomeCliente: '',
+      logado: false,
+    }
+  },
+  mounted() {
+    this.obterDadosToken()
   },
   methods: {
     async obterDadosToken() {
-      let token = localStorage.getItem('cdv')
-      console.log(token)
+      let token = JSON.parse(sessionStorage.getItem('cdv'))
+      this.nomeCliente = token.nome
     },
   },
 })

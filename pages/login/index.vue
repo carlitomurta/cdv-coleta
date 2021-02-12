@@ -168,7 +168,7 @@
               Cadastrar
             </button>
           </div>
-          <div v-if="sent" class="p-4 mt-4 bg-green-100 rounded-lg">
+          <div v-if="loading" class="p-4 mt-4 bg-green-100 rounded-lg">
             <p class="text-sm text-center text-green-500">
               Sucesso! Recebemos seu cadastro, em breve faremos contato.
             </p>
@@ -185,6 +185,18 @@
         </div>
       </modal>
     </div>
+
+    <section>
+      <!-- Loading -->
+      <div class="vld-parent">
+        <loading
+          :active.sync="loading"
+          :can-cancel="false"
+          :is-full-page="true"
+        >
+        </loading>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -200,10 +212,12 @@
 
 <script>
 import Vue from 'vue'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default Vue.extend({
   beforeMount() {
-    localStorage.clear()
+    sessionStorage.removeItem('cdv')
   },
   data() {
     return {
@@ -217,9 +231,12 @@ export default Vue.extend({
         senha: '',
         repitaSenha: '',
       },
-      sent: false,
+      loading: false,
       error: '',
     }
+  },
+  components: {
+    Loading,
   },
   methods: {
     clearCadastro() {
@@ -249,14 +266,17 @@ export default Vue.extend({
         ]
       else {
         this.error = ''
+        this.loading = true
         await this.$axios
           .post('usuarios', this.cadastro)
           .then((res) => {
             this.clearCadastro()
-            localStorage.setItem('cdv', JSON.stringify(res.data))
+            sessionStorage.setItem('cdv', JSON.stringify(res.data))
+            this.loading = false
             this.$router.push({ name: 'area-logada' })
           })
           .catch((err) => {
+            this.loading = false
             this.error = err.response.data
           })
       }
@@ -267,6 +287,19 @@ export default Vue.extend({
         this.error = [
           { descricao: 'Atenção, você deve informar todos os campos. ;)' },
         ]
+      } else {
+        this.error = ''
+        this.loading = true
+        await this.$axios
+          .post('usuarios/login', this.login)
+          .then((res) => {
+            sessionStorage.setItem('cdv', JSON.stringify(res.data))
+            this.$router.push({ name: 'area-logada' })
+          })
+          .catch((err) => {
+            this.loading = false
+            this.error = err.response.data
+          })
       }
     },
   },

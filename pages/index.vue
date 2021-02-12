@@ -579,6 +579,14 @@ import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 
 export default Vue.extend({
   components: { VueSlickCarousel },
+  beforeMount() {
+    sessionStorage.removeItem('cdv')
+  },
+  mounted() {
+    let tokenStorage = JSON.parse(sessionStorage.getItem('cdv'))
+    if (tokenStorage != null && tokenStorage != undefined) this.logado = true
+    else this.logado = false
+  },
   data() {
     return {
       contact: {
@@ -609,7 +617,6 @@ export default Vue.extend({
         this.error = 'Atenção, você deve informar todos os campos. ;)'
       else {
         this.error = ''
-        console.log(this.contact)
         try {
           await this.$axios.post(
             'http://localhost:53495/coleta-seletiva/v1/clientes/intencao',

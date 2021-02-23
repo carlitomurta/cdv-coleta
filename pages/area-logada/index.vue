@@ -1,7 +1,7 @@
 <template>
   <div>
     <section v-if="passo == 1" class="mb-2 bg-green-200">
-      <div class="container mx-auto mt-8">
+      <div class="container mx-auto mt-8 p-3">
         <h1 class="mb-2">
           Bem vindo(a),<strong> {{ nomeCliente }}.</strong>
         </h1>
@@ -80,7 +80,7 @@
       </div>
     </section>
     <section v-if="passo == 2" class="bg-brand-green">
-      <div class="container mx-auto mt-8">
+      <div class="container mx-auto mt-8 p-3">
         <div>
           <h1
             class="mb-6 text-center text-2xl font-head text-white lg:text-4xl"
@@ -515,7 +515,7 @@
                 </div>
               </section>
             </form>
-            <div v-if="sent" class="p-4 mt-4 bg-green-100 rounded-lg">
+            <!-- <div v-if="sent" class="p-4 mt-4 bg-green-100 rounded-lg">
               <p class="text-sm text-center text-green-500">
                 Sucesso! Recebemos seu cadastro, em breve faremos contato.
               </p>
@@ -524,7 +524,7 @@
               <p class="text-sm text-center text-red-500">
                 {{ error }}
               </p>
-            </div>
+            </div> -->
             <button
               class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
               type="button"
@@ -538,47 +538,188 @@
       </div>
     </section>
     <section v-if="passo == 3" class="bg-green-100">
-      <div class="container mx-auto mt-8">
-        <div>
-          <h1
-            class="mb-6 text-center text-2xl font-head text-grey-400 lg:text-4xl"
-          >
-            Formas de Pagamento
+      <div class="container mx-auto mt-6 p-3">
+        <div class="p-3 bg-white rounded-lg shadow">
+          <h1 class="mb-6 text-2xl font-head text-grey-400 lg:text-4xl">
+            Como deseja pagar?
           </h1>
-          <div class="mb-6 text-base text-grey-400">
-            <h1>Periodicidade do pagamento:</h1>
-            <select
-              class="absolute p-2 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
-              name=""
-            >
-              <option value="0"></option>
-              <option value="1">
-                Mensal (taxa de R$ 2,00 para emissão de boleto)
-              </option>
-              <option value="2">
-                Bimestral (taxa de R$ 2,00 para emissão de boleto)
-              </option>
-              <option value="3">
-                Trimestral (sem cobrança de taxa para emissão)
-              </option>
-            </select>
+          <div class="flex items-stretch mb-2">
+            <div class="flex-1 text-center">
+              <div>
+                <img
+                  class="mx-auto"
+                  src="~/static/pagamento/boleto.png"
+                  alt="boleto"
+                />
+              </div>
+              <input
+                v-model="formaPagamento.tipo"
+                value="1"
+                name="tipo"
+                type="radio"
+                required
+              />
+              Boleto Bancário
+            </div>
+            <div class="flex-1 text-center">
+              <div>
+                <img
+                  class="mx-auto"
+                  src="~/static/pagamento/cartao.png"
+                  alt="cartao"
+                />
+              </div>
+              <input
+                v-model="formaPagamento.tipo"
+                value="2"
+                name="tipo"
+                type="radio"
+                required
+              />
+              Cartão de Crédito
+            </div>
           </div>
-          <div class="mb-6 mt-4 text-base text-grey-400">
-            <h1>Dia do vencimento:</h1>
-            <select
-              class="absolute p-2 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
-              name=""
+
+          <div v-if="formaPagamento.tipo == 1">
+            <hr />
+            <div class="flex items-stretch">
+              <div class="flex-1 mb-6 mt-6 p-3">
+                <h1><strong>Periodicidade do pagamento:</strong></h1>
+                <div
+                  class="relative mb-4 border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="periodicidadePagamento.periodo"
+                    type="radio"
+                    name="periodo"
+                    autocomplete="off"
+                    value="1"
+                    required
+                  />
+                  Mensal (taxa de R$ 2,00 para emissão de boleto)
+                </div>
+                <div
+                  class="relative mb-4 border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="periodicidadePagamento.periodo"
+                    type="radio"
+                    name="periodo"
+                    autocomplete="off"
+                    value="2"
+                    required
+                  />
+                  Bimestral (taxa de R$ 2,00 para emissão de boleto)
+                </div>
+                <div
+                  class="relative mb-4 border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="periodicidadePagamento.periodo"
+                    type="radio"
+                    name="periodo"
+                    autocomplete="off"
+                    value="3"
+                    required
+                  />
+                  Trimestral (sem cobrança de taxa para emissão)
+                </div>
+              </div>
+              <div class="flex-1 mb-6 mt-6 p-3">
+                <h1>
+                  <strong>Escolha o dia para o vencimento do boleto:</strong>
+                </h1>
+                <div
+                  class="relative mb-4 border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="vencimentoBoleto.dia"
+                    type="radio"
+                    name="dia"
+                    autocomplete="off"
+                    value="1"
+                    required
+                  />
+                  Dia 5
+                </div>
+                <div
+                  class="relative mb-4 border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="vencimentoBoleto.dia"
+                    type="radio"
+                    name="dia"
+                    autocomplete="off"
+                    value="2"
+                    required
+                  />
+                  Dia 10
+                </div>
+                <div
+                  class="relative mb-4 border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="vencimentoBoleto.dia"
+                    type="radio"
+                    name="dia"
+                    autocomplete="off"
+                    value="3"
+                    required
+                  />
+                  Dia 20
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <modal
+              name="modal-pagamento"
+              :height="450"
+              :maxWidth="400"
+              :adaptive="true"
             >
-              <option value="0"></option>
-              <option value="1">5</option>
-              <option value="2">10</option>
-              <option value="3">20</option>
-            </select>
+              <div class="p-8 bg-white rounded-lg shadow">
+                <h2>RESUMO DO PAGAMENTO...</h2>
+
+                <div>
+                  <button
+                    class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                    type="button"
+                    role="button"
+                  >
+                    Confirmar
+                  </button>
+                </div>
+                <div v-if="loading" class="p-4 mt-4 bg-green-100 rounded-lg">
+                  <p class="text-sm text-center text-green-500">
+                    Sucesso! Recebemos seu cadastro, em breve faremos contato.
+                  </p>
+                </div>
+                <div v-if="error" class="p-2 mt-1 bg-red-100 rounded-lg">
+                  <p
+                    v-for="err in error"
+                    :key="err.descricao"
+                    class="text-sm text-center text-red-500"
+                  >
+                    {{ err.descricao }}
+                  </p>
+                </div>
+              </div>
+            </modal>
+          </div>
+
+          <div v-if="periodicidadePagamento.periodo && vencimentoBoleto.dia">
+            <button
+              class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+              type="button"
+              role="button"
+              @click="showModal"
+            >
+              Finalizar
+            </button>
           </div>
         </div>
-      </div>
-      <div>
-        <button @click.prevent="mudarPasso">Mudar</button>
       </div>
     </section>
   </div>
@@ -586,6 +727,13 @@
 
 
 <style scoped>
+img {
+  max-width: 20%;
+}
+
+hr {
+  color: rgb(165, 164, 164);
+}
 </style>
 
 <script>
@@ -595,6 +743,7 @@ export default Vue.extend({
     return {
       nomeCliente: '',
       passo: 1,
+      valorTotal: 10.0,
       contact: {
         endereco: '',
         numeroEndereco: '',
@@ -609,6 +758,15 @@ export default Vue.extend({
         ParticipaDoProgramaLixoZero: '',
         ComoFicouSabendoDaColetaDeVizinhanca: '',
         ComoFicouSabendoOutro: '',
+      },
+      formaPagamento: {
+        tipo: '',
+      },
+      periodicidadePagamento: {
+        periodo: '',
+      },
+      vencimentoBoleto: {
+        dia: '',
       },
     }
   },
@@ -626,6 +784,9 @@ export default Vue.extend({
     },
     async mudarPasso() {
       this.passo = this.passo + 1
+    },
+    showModal() {
+      this.$modal.show('modal-pagamento')
     },
   },
 })

@@ -90,7 +90,8 @@
           <h3 class="mb-6 text-base text-white">
             <h1>
               Para a adesão de sua casa ou de seu apartamento, preencha este
-              formulário. O preço atual é de R$ (dinâmico) reais.
+              formulário. O preço atual é de
+              <strong> R$ {{ precoAdesao.toLocaleString() }} reais.</strong>
             </h1>
             <p>
               Caso a adesão seja do seu prédio ou do seu condomínio, preencha
@@ -114,7 +115,7 @@
                     type="radio"
                     name="DesejoDaColeta"
                     autocomplete="off"
-                    value="0"
+                    value="1"
                     required
                   />
                   Para sua casa
@@ -127,7 +128,7 @@
                     type="radio"
                     name="DesejoDaColeta"
                     autocomplete="off"
-                    value="1"
+                    value="2"
                     required
                   />
                   Para seu apartamento
@@ -140,7 +141,7 @@
                     type="radio"
                     name="DesejoDaColeta"
                     autocomplete="off"
-                    value="2"
+                    value="3"
                     required
                   />
                   Para seu prédio (marque essa opção caso existam pelo menos
@@ -148,50 +149,32 @@
                 </div>
               </section>
               <div
-                v-if="contact.DesejoDaColeta != 2"
                 class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
               >
-                <input
-                  v-model="contact.cpf"
+                <the-mask
+                  :mask="['###.###.###-##', '##.###.###/####-##']"
+                  v-model="contact.cpfCnpj"
                   type="text"
-                  name="cpf"
-                  maxlength="15"
+                  name="cpfCnpj"
+                  maxlength="18"
                   autocomplete="off"
-                  placeholder="CPF"
+                  placeholder="CPF/CNPJ"
                   required
                   class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
                 />
                 <label
-                  for="cpf"
+                  for="cpfCnpj"
                   class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
-                  >CPF</label
-                >
-              </div>
-              <div
-                v-if="contact.DesejoDaColeta == 2"
-                class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
-              >
-                <input
-                  v-model="contact.cnpj"
-                  type="text"
-                  name="cnpj"
-                  maxlength="15"
-                  autocomplete="off"
-                  placeholder="CNPJ"
-                  required
-                  class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
-                />
-                <label
-                  for="cnpj"
-                  class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
-                  >CNPJ</label
+                  >CPF/CNPJ</label
                 >
               </div>
               <div
                 class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
               >
-                <input
+                <the-mask
+                  :mask="['(##) #####-####']"
                   v-model="contact.celular"
+                  masked="true"
                   type="text"
                   name="celular"
                   maxlength="15"
@@ -213,7 +196,7 @@
                   v-model="contact.endereco"
                   type="text"
                   name="endereco"
-                  maxlength="15"
+                  maxlength="200"
                   autocomplete="off"
                   placeholder="Endereco"
                   required
@@ -251,7 +234,7 @@
                   v-model="contact.complemento"
                   type="text"
                   name="complemento"
-                  maxlength="15"
+                  maxlength="100"
                   autocomplete="off"
                   placeholder="Complemento"
                   required
@@ -270,7 +253,7 @@
                   v-model="contact.bairro"
                   type="text"
                   name="bairro"
-                  maxlength="15"
+                  maxlength="50"
                   autocomplete="off"
                   placeholder="Bairro"
                   required
@@ -309,7 +292,7 @@
                     type="radio"
                     name="ParticipaDoProgramaLixoZero"
                     autocomplete="off"
-                    value="0"
+                    value="2"
                     required
                   />
                   Não
@@ -322,7 +305,7 @@
                     type="radio"
                     name="ParticipaDoProgramaLixoZero"
                     autocomplete="off"
-                    value="2"
+                    value="3"
                     required
                   />
                   Não sei dizer
@@ -354,7 +337,7 @@
                     type="radio"
                     name="participarDoWhatsapp"
                     autocomplete="off"
-                    value="0"
+                    value="2"
                     required
                   />
                   Não
@@ -387,7 +370,7 @@
                     type="radio"
                     name="jaSeparaReciclavel"
                     autocomplete="off"
-                    value="0"
+                    value="2"
                     required
                   />
                   Não
@@ -400,7 +383,7 @@
                     type="radio"
                     name="jaSeparaReciclavel"
                     autocomplete="off"
-                    value="2"
+                    value="3"
                     required
                   />
                   Não sei dizer
@@ -416,7 +399,7 @@
                     type="radio"
                     name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
-                    value="0"
+                    value="1"
                     required
                   />
                   Amigos(as)
@@ -429,7 +412,7 @@
                     type="radio"
                     name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
-                    value="1"
+                    value="2"
                     required
                   />
                   Vizinho(as)
@@ -442,7 +425,7 @@
                     type="radio"
                     name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
-                    value="2"
+                    value="3"
                     required
                   />
                   Facebook
@@ -455,7 +438,7 @@
                     type="radio"
                     name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
-                    value="3"
+                    value="4"
                     required
                   />
                   Instagram
@@ -468,7 +451,7 @@
                     type="radio"
                     name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
-                    value="4"
+                    value="5"
                     required
                   />
                   Portal Santa Tereza Tem
@@ -481,7 +464,7 @@
                     type="radio"
                     name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
-                    value="5"
+                    value="6"
                     required
                   />
                   Youtube
@@ -495,13 +478,13 @@
                     type="radio"
                     name="ComoFicouSabendoDaColetaDeVizinhanca"
                     autocomplete="off"
-                    value="6"
+                    value="7"
                     required
                   />
                   Outro:
                 </div>
                 <div
-                  v-if="contact.ComoFicouSabendoDaColetaDeVizinhanca == 6"
+                  v-if="contact.ComoFicouSabendoDaColetaDeVizinhanca == 7"
                   class="relative mb-4 border-2 rounded-lg border-grey-200 focus-within:border-black"
                 >
                   <input
@@ -519,17 +502,17 @@
               <p class="text-sm text-center text-green-500">
                 Sucesso! Recebemos seu cadastro, em breve faremos contato.
               </p>
-            </div>
+            </div> -->
             <div v-if="error" class="p-4 mt-4 bg-red-100 rounded-lg">
               <p class="text-sm text-center text-red-500">
                 {{ error }}
               </p>
-            </div> -->
+            </div>
             <button
               class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
               type="button"
               role="button"
-              @click.prevent="mudarPasso"
+              @click.prevent="salvarAdesao"
             >
               Salvar e Continuar
             </button>
@@ -609,7 +592,7 @@
                     value="2"
                     required
                   />
-                  Bimestral (taxa de R$ 2,00 para emissão de boleto)
+                  Trimestral (taxa de R$ 2,00 para emissão de boleto)
                 </div>
                 <div
                   class="relative mb-4 border-grey-200 focus-within:border-black"
@@ -622,7 +605,7 @@
                     value="3"
                     required
                   />
-                  Trimestral (sem cobrança de taxa para emissão)
+                  Semestral (sem cobrança de taxa para emissão)
                 </div>
               </div>
               <div class="flex-1 mb-6 mt-6 p-3">
@@ -675,18 +658,53 @@
           <div>
             <modal
               name="modal-pagamento"
-              :height="450"
+              :height="340"
               :maxWidth="400"
               :adaptive="true"
             >
               <div class="p-8 bg-white rounded-lg shadow">
-                <h2>RESUMO DO PAGAMENTO...</h2>
-
+                <h2 class="text-center">Confirmação dos Dados de Pagamento</h2>
+                <hr />
+                <div class="mt-2 p-2">
+                  <label>Forma de Pagamento:</label>
+                  <strong>{{
+                    formaPagamento.tipo == 1
+                      ? 'Boleto Bancário'
+                      : 'Cartão de Crédito'
+                  }}</strong>
+                </div>
+                <div class="mt-2 p-2">
+                  <label>Periodicidade de Pagamento:</label>
+                  <strong>{{
+                    periodicidadePagamento.periodo == 1
+                      ? 'Mensal'
+                      : periodicidadePagamento.periodo == 2
+                      ? 'Trimestral'
+                      : 'Semestral'
+                  }}</strong>
+                </div>
+                <div class="mt-2 p-2">
+                  <label>Vencimento do Boleto:</label>
+                  <strong>{{
+                    vencimentoBoleto.dia == 1
+                      ? 'Dia 05'
+                      : vencimentoBoleto.dia == 2
+                      ? 'Dia 10'
+                      : 'Dia 20'
+                  }}</strong>
+                </div>
+                <div class="mt-2 p-2 mb-4">
+                  <label>Valor da Cobrança:</label>
+                  <strong class="font-bold text-green-500"
+                    >R$ {{ valorCobranca.toLocaleString() }}</strong
+                  >
+                </div>
                 <div>
                   <button
                     class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
                     type="button"
                     role="button"
+                    @click="enviarCobranca"
                   >
                     Confirmar
                   </button>
@@ -716,10 +734,22 @@
               role="button"
               @click="showModal"
             >
-              Finalizar
+              Concluir
             </button>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- Loading -->
+      <div class="vld-parent">
+        <loading
+          :active.sync="loading"
+          :can-cancel="false"
+          :is-full-page="true"
+        >
+        </loading>
       </div>
     </section>
   </div>
@@ -738,25 +768,35 @@ hr {
 
 <script>
 import Vue from 'vue'
+import VueTheMask from 'vue-the-mask'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
+Vue.use(VueTheMask)
+
 export default Vue.extend({
   data() {
     return {
       nomeCliente: '',
-      passo: 1,
-      valorTotal: 10.0,
+      passo: 3,
+      valorTotal: 0,
+      error: '',
+      token: '',
+      loading: false,
+      precoAdesao: 0,
+      valorCobranca: 0,
       contact: {
+        email: '',
         endereco: '',
         numeroEndereco: '',
         complemento: '',
-        cnpj: '',
-        cpf: '',
+        cpfCnpj: '',
         celular: '',
         bairro: '',
-        participarDoWhatsapp: '',
-        jaSeparaReciclavel: '',
-        DesejoDaColeta: '',
-        ParticipaDoProgramaLixoZero: '',
-        ComoFicouSabendoDaColetaDeVizinhanca: '',
+        participarDoWhatsapp: 0,
+        jaSeparaReciclavel: 0,
+        DesejoDaColeta: 0,
+        ParticipaDoProgramaLixoZero: 0,
+        ComoFicouSabendoDaColetaDeVizinhanca: 0,
         ComoFicouSabendoOutro: '',
       },
       formaPagamento: {
@@ -768,25 +808,125 @@ export default Vue.extend({
       vencimentoBoleto: {
         dia: '',
       },
+      pagamentoBoleto: {
+        email: '',
+        periodicidadePagamento: 0,
+        diaVencimento: 0,
+        valor: 0,
+      },
     }
+  },
+  components: {
+    Loading,
   },
   mounted() {
     this.obterDadosToken()
   },
   methods: {
+    async salvarAdesao() {
+      if (
+        !this.contact.endereco ||
+        !this.contact.numeroEndereco ||
+        !this.contact.celular ||
+        !this.contact.bairro ||
+        !this.contact.participarDoWhatsapp ||
+        !this.contact.jaSeparaReciclavel ||
+        !this.contact.DesejoDaColeta ||
+        !this.contact.ParticipaDoProgramaLixoZero ||
+        !this.contact.ComoFicouSabendoDaColetaDeVizinhanca
+      ) {
+        this.error =
+          'Atenção, você deve informar todos os campos do Formulário de Adesão!'
+      } else {
+        this.error = ''
+        let config = this.obterHeader()
+        this.contact.email = this.token.email
+        this.loading = true
+
+        await this.$axios
+          .post('clientes/adesao', this.contact, config)
+          .then((res) => {
+            this.loading = false
+            this.mudarPasso()
+          })
+          .catch((err) => {
+            this.loading = false
+          })
+      }
+    },
     async obterDadosToken() {
-      let token = JSON.parse(sessionStorage.getItem('cdv'))
-      if (token == null || token.token == null || token.token == undefined)
+      this.token = JSON.parse(sessionStorage.getItem('cdv'))
+      if (
+        this.token == null ||
+        this.token.token == null ||
+        this.token.token == undefined
+      )
         this.$router.push((name = '/'))
       else {
-        this.nomeCliente = token.nome
+        this.nomeCliente = this.token.nome
       }
+    },
+    async obterValorAdesao() {
+      this.loading = true
+      let config = this.obterHeader()
+
+      await this.$axios
+        .get('financeiro/valor-servico', config)
+        .then((res) => {
+          this.loading = false
+
+          this.precoAdesao = res.data.valor
+        })
+        .catch((err) => {
+          this.loading = false
+        })
     },
     async mudarPasso() {
       this.passo = this.passo + 1
+      if (this.passo == 2) this.obterValorAdesao()
+      window.scrollTo(0, 0)
     },
-    showModal() {
+    async showModal() {
       this.$modal.show('modal-pagamento')
+      //retirar obtervaloradesao
+      await this.obterValorAdesao()
+      this.calcularValorCobranca()
+    },
+    obterHeader() {
+      return {
+        headers: {
+          Authorization: 'Bearer ' + this.token.token,
+        },
+      }
+    },
+    calcularValorCobranca() {
+      if (this.periodicidadePagamento.periodo == 2)
+        this.valorCobranca = this.precoAdesao * 3
+      else if (this.periodicidadePagamento.periodo == 3)
+        this.valorCobranca = this.precoAdesao * 6
+      else this.valorCobranca = this.precoAdesao
+    },
+    async enviarCobranca() {
+      let config = this.obterHeader()
+      if (this.formaPagamento.tipo == 1) {
+        this.pagamentoBoleto.email = this.token.email
+        this.pagamentoBoleto.periodicidadePagamento = Number(
+          this.periodicidadePagamento.periodo
+        )
+        this.pagamentoBoleto.diaVencimento = Number(this.vencimentoBoleto.dia)
+        this.pagamentoBoleto.valor = this.valorCobranca
+
+        this.loading = true
+        await this.$axios
+          .post('financeiro/pagamento/boleto', this.pagamentoBoleto, config)
+          .then((res) => {
+            this.loading = false
+          })
+          .catch((err) => {
+            this.loading = false
+          })
+      } else {
+      }
     },
   },
 })

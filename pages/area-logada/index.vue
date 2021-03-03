@@ -576,7 +576,7 @@
                     type="radio"
                     name="periodo"
                     autocomplete="off"
-                    value="1"
+                    value="3"
                     required
                   />
                   Mensal (taxa de R$ 2,00 para emissão de boleto)
@@ -589,7 +589,7 @@
                     type="radio"
                     name="periodo"
                     autocomplete="off"
-                    value="2"
+                    value="4"
                     required
                   />
                   Trimestral (taxa de R$ 2,00 para emissão de boleto)
@@ -602,7 +602,7 @@
                     type="radio"
                     name="periodo"
                     autocomplete="off"
-                    value="3"
+                    value="5"
                     required
                   />
                   Semestral (sem cobrança de taxa para emissão)
@@ -655,30 +655,193 @@
             </div>
           </div>
 
+          <div v-if="formaPagamento.tipo == 2">
+            <hr />
+            <br />
+            <div
+              class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
+            >
+              <input
+                v-model="cartao.nomeNoCartao"
+                type="text"
+                name="nomeNoCartao"
+                autocomplete="off"
+                placeholder="Nome Impresso no Cartão"
+                required
+                class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+              />
+              <label
+                for="nomeNoCartao"
+                class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
+                >Nome Impresso no Cartão</label
+              >
+            </div>
+
+            <div
+              class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
+            >
+              <the-mask
+                :mask="['####-####-####-####']"
+                v-model="cartao.numeroCartao"
+                type="text"
+                name="numeroCartao"
+                autocomplete="off"
+                placeholder="Número do Cartão"
+                required
+                class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+              />
+              <label
+                for="numeroCartao"
+                class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
+                >Número do Cartão</label
+              >
+            </div>
+
+            <div
+              class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
+            >
+              <the-mask
+                :mask="['##']"
+                v-model="cartao.mesExpiracao"
+                type="text"
+                name="mesExpiracao"
+                autocomplete="off"
+                placeholder="Ex: 06"
+                required
+                class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+              />
+              <label
+                for="mesExpiracao"
+                class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
+                >Mês Expiração</label
+              >
+            </div>
+
+            <div
+              class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
+            >
+              <the-mask
+                :mask="['####']"
+                v-model="cartao.anoExpiracao"
+                type="text"
+                name="anoExpiracao"
+                autocomplete="off"
+                placeholder="Ex: 2021"
+                required
+                class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+              />
+              <label
+                for="anoExpiracao"
+                class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
+                >Ano Expiração</label
+              >
+            </div>
+
+            <div
+              class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
+            >
+              <the-mask
+                :mask="['###']"
+                v-model="cartao.codigoSeguranca"
+                type="text"
+                name="codigoSeguranca"
+                autocomplete="off"
+                placeholder="Código Segurança"
+                required
+                class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+              />
+              <label
+                for="codigoSeguranca"
+                class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
+                >Código Segurança</label
+              >
+            </div>
+
+            <strong>Parcelamento no Cartão:</strong>
+            <div>
+              <select
+                class="relative mb-4 w-full border-2 p-3 strong rounded-lg outline border-grey-200 focus-within:border-black"
+                name="parcelamento"
+                v-model="parcelamento"
+              >
+                <option value="0">Selecione...</option>
+                <option value="1">
+                  1 x de R$ {{ (precoAdesao * 12).toLocaleString(2) }} sem juros
+                </option>
+                <option value="2">
+                  2 x de R$
+                  {{ (precoAdesao * 6).toLocaleString(2) }} sem juros
+                </option>
+                <option value="3">
+                  3 x de R$
+                  {{ (precoAdesao * 4).toLocaleString(2) }} sem juros
+                </option>
+                <option value="4">
+                  4 x de R$
+                  {{ ((precoAdesao * 12) / 4).toLocaleString(2) }} sem juros
+                </option>
+                <option value="5">
+                  5 x de R$
+                  {{ ((precoAdesao * 12) / 5).toLocaleString(2) }} sem juros
+                </option>
+                <option value="6">
+                  6 x de R$
+                  {{ ((precoAdesao * 12) / 2).toLocaleString(2) }} sem juros
+                </option>
+                <option value="7">
+                  7 x de R$
+                  {{ ((precoAdesao * 12) / 7).toLocaleString(2) }} sem juros
+                </option>
+                <option value="8">
+                  8 x de R$
+                  {{ ((precoAdesao * 12) / 8).toLocaleString(2) }} sem juros
+                </option>
+                <option value="9">
+                  9 x de R$
+                  {{ ((precoAdesao * 12) / 9).toLocaleString(2) }} sem juros
+                </option>
+                <option value="10">
+                  10 x de R$
+                  {{ ((precoAdesao * 12) / 10).toLocaleString(2) }}
+                  sem juros
+                </option>
+                <option value="11">
+                  11 x de R$
+                  {{ ((precoAdesao * 12) / 11).toLocaleString(2) }}
+                  sem juros
+                </option>
+                <option value="12">
+                  12 x de R$ {{ precoAdesao.toLocaleString(2) }} sem juros
+                </option>
+              </select>
+            </div>
+          </div>
+
           <div>
             <modal
               name="modal-pagamento"
-              :height="340"
+              :height="300"
               :maxWidth="400"
               :adaptive="true"
             >
-              <div class="p-8 bg-white rounded-lg shadow">
-                <h2 class="text-center">Confirmação dos Dados de Pagamento</h2>
+              <div
+                v-if="formaPagamento.tipo == 1"
+                class="p-8 bg-white rounded-lg shadow"
+              >
+                <h2 class="text-center font-bold">
+                  Confirmação dos Dados de Pagamento
+                </h2>
                 <hr />
                 <div class="mt-2 p-2">
                   <label>Forma de Pagamento:</label>
-                  <strong>{{
-                    formaPagamento.tipo == 1
-                      ? 'Boleto Bancário'
-                      : 'Cartão de Crédito'
-                  }}</strong>
+                  <strong> Boleto Bancário </strong>
                 </div>
                 <div class="mt-2 p-2">
                   <label>Periodicidade de Pagamento:</label>
                   <strong>{{
-                    periodicidadePagamento.periodo == 1
+                    periodicidadePagamento.periodo == 3
                       ? 'Mensal'
-                      : periodicidadePagamento.periodo == 2
+                      : periodicidadePagamento.periodo == 4
                       ? 'Trimestral'
                       : 'Semestral'
                   }}</strong>
@@ -699,19 +862,90 @@
                     >R$ {{ valorCobranca.toLocaleString() }}</strong
                   >
                 </div>
-                <div>
+                <div v-if="!sucesso">
                   <button
                     class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
                     type="button"
                     role="button"
                     @click="enviarCobranca"
                   >
-                    Confirmar
+                    Confirmar Pagamento
                   </button>
                 </div>
-                <div v-if="loading" class="p-4 mt-4 bg-green-100 rounded-lg">
+
+                <div v-if="sucesso">
+                  <button
+                    class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                    type="button"
+                    role="button"
+                    @click="downloadBoleto"
+                  >
+                    Baixar Boleto
+                  </button>
+                </div>
+
+                <div v-if="sucesso" class="p-4 mt-4 bg-green-100 rounded-lg">
                   <p class="text-sm text-center text-green-500">
-                    Sucesso! Recebemos seu cadastro, em breve faremos contato.
+                    :) Obrigado, seu Boleto foi gerado com sucesso!
+                  </p>
+                </div>
+                <div v-if="error" class="p-2 mt-1 bg-red-100 rounded-lg">
+                  <p
+                    v-for="err in error"
+                    :key="err.descricao"
+                    class="text-sm text-center text-red-500"
+                  >
+                    {{ err.descricao }}
+                  </p>
+                </div>
+              </div>
+              <div
+                v-if="formaPagamento.tipo == 2"
+                class="p-8 bg-white rounded-lg shadow"
+              >
+                <h2 class="text-center font-bold">
+                  Confirmação dos Dados de Pagamento
+                </h2>
+                <hr />
+                <div class="mt-2 p-2">
+                  <label>Forma de Pagamento:</label>
+                  <strong> Cartão de Crédito </strong>
+                </div>
+
+                <div class="mt-2 p-2 mb-4">
+                  <label>Parcelamento:</label>
+                  <strong class="font-bold text-green-500">{{
+                    parcelamento +
+                    ' x de ' +
+                    ((precoAdesao * 12) / parcelamento).toLocaleString() +
+                    ' sem juros'
+                  }}</strong>
+                </div>
+                <div v-if="!sucesso">
+                  <button
+                    class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                    type="button"
+                    role="button"
+                    @click="enviarCobranca"
+                  >
+                    Confirmar Pagamento
+                  </button>
+                </div>
+
+                <div v-if="sucesso">
+                  <button
+                    class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                    type="button"
+                    role="button"
+                    @click="fecharModal"
+                  >
+                    Fechar
+                  </button>
+                </div>
+
+                <div v-if="sucesso" class="p-4 mt-4 bg-green-100 rounded-lg">
+                  <p class="text-sm text-center text-green-500">
+                    :) Obrigado, seu pagamento foi realizado com sucesso!
                   </p>
                 </div>
                 <div v-if="error" class="p-2 mt-1 bg-red-100 rounded-lg">
@@ -727,7 +961,20 @@
             </modal>
           </div>
 
-          <div v-if="periodicidadePagamento.periodo && vencimentoBoleto.dia">
+          <div
+            v-if="
+              (formaPagamento.tipo == 1 &&
+                periodicidadePagamento.periodo &&
+                vencimentoBoleto.dia) ||
+              (formaPagamento.tipo == 2 &&
+                cartao.numeroCartao.length == 16 &&
+                cartao.nomeNoCartao.length > 4 &&
+                cartao.mesExpiracao.length == 2 &&
+                cartao.anoExpiracao.length == 4 &&
+                cartao.codigoSeguranca.length == 3 &&
+                parcelamento != 0)
+            "
+          >
             <button
               class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
               type="button"
@@ -782,8 +1029,10 @@ export default Vue.extend({
       error: '',
       token: '',
       loading: false,
+      sucesso: false,
       precoAdesao: 0,
       valorCobranca: 0,
+      parcelamento: '0',
       contact: {
         email: '',
         endereco: '',
@@ -798,6 +1047,13 @@ export default Vue.extend({
         ParticipaDoProgramaLixoZero: 0,
         ComoFicouSabendoDaColetaDeVizinhanca: 0,
         ComoFicouSabendoOutro: '',
+      },
+      cartao: {
+        nomeNoCartao: '',
+        numeroCartao: '',
+        mesExpiracao: '',
+        anoExpiracao: '',
+        codigoSeguranca: '',
       },
       formaPagamento: {
         tipo: '',
@@ -821,6 +1077,8 @@ export default Vue.extend({
   },
   mounted() {
     this.obterDadosToken()
+    //retirar obtervaloradesao
+    if (this.passo == 3) this.obterValorAdesao()
   },
   methods: {
     async salvarAdesao() {
@@ -884,13 +1142,19 @@ export default Vue.extend({
     async mudarPasso() {
       this.passo = this.passo + 1
       if (this.passo == 2) this.obterValorAdesao()
+
       window.scrollTo(0, 0)
     },
     async showModal() {
+      this.botaoConfirmar = 'Confirmar Pagamento'
+      this.sucesso = false
       this.$modal.show('modal-pagamento')
-      //retirar obtervaloradesao
-      await this.obterValorAdesao()
+
       this.calcularValorCobranca()
+    },
+    async fecharModal() {
+      this.$modal.hide('modal-pagamento')
+      this.$router.push('/')
     },
     obterHeader() {
       return {
@@ -900,9 +1164,9 @@ export default Vue.extend({
       }
     },
     calcularValorCobranca() {
-      if (this.periodicidadePagamento.periodo == 2)
+      if (this.periodicidadePagamento.periodo == 4)
         this.valorCobranca = this.precoAdesao * 3
-      else if (this.periodicidadePagamento.periodo == 3)
+      else if (this.periodicidadePagamento.periodo == 5)
         this.valorCobranca = this.precoAdesao * 6
       else this.valorCobranca = this.precoAdesao
     },
@@ -921,12 +1185,53 @@ export default Vue.extend({
           .post('financeiro/pagamento/boleto', this.pagamentoBoleto, config)
           .then((res) => {
             this.loading = false
+            this.sucesso = true
           })
           .catch((err) => {
             this.loading = false
+            this.sucesso = false
           })
       } else {
+        let pagamentoCartao = {
+          email: this.token.email,
+          periodicidadePagamento: Number(6),
+          diaVencimento: Number(1),
+          valor: 0,
+          nomeNoCartao: this.cartao.nomeNoCartao,
+          numeroCartao: this.cartao.numeroCartao,
+          mesExpiracao: this.cartao.mesExpiracao,
+          anoExpiracao: this.cartao.anoExpiracao,
+          codigoSeguranca: this.cartao.codigoSeguranca,
+          qtdParcelas: Number(this.parcelamento),
+          valorParcela: (this.precoAdesao * 12) / this.parcelamento,
+        }
+
+        this.loading = true
+        await this.$axios
+          .post('financeiro/pagamento/cartao', pagamentoCartao, config)
+          .then((res) => {
+            this.loading = false
+            this.sucesso = true
+          })
+          .catch((err) => {
+            this.loading = false
+            this.sucesso = false
+          })
       }
+    },
+    async downloadBoleto() {
+      let config = this.obterHeader()
+      this.loading = true
+
+      await this.$axios
+        .get('financeiro/' + this.token.email + '/download-boleto', config)
+        .then((res) => {
+          this.loading = false
+          window.open(res.data, '_blank')
+        })
+        .catch((err) => {
+          this.loading = false
+        })
     },
   },
 })

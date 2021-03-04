@@ -214,6 +214,7 @@
 import Vue from 'vue'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import decode from 'jwt-decode'
 
 export default Vue.extend({
   beforeMount() {
@@ -294,7 +295,11 @@ export default Vue.extend({
           .post('usuarios/login', this.login)
           .then((res) => {
             sessionStorage.setItem('cdv', JSON.stringify(res.data))
-            this.$router.push({ name: 'area-logada' })
+            let decodeJwt = decode(res.data.token)
+            if (decodeJwt.role == 'Cliente')
+              this.$router.push({ name: 'area-logada' })
+            else if (decodeJwt.role == 'Administrador')
+              this.$router.push({ name: 'administrador' })
           })
           .catch((err) => {
             this.loading = false

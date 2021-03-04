@@ -498,11 +498,6 @@
                 </div>
               </section>
             </form>
-            <!-- <div v-if="sent" class="p-4 mt-4 bg-green-100 rounded-lg">
-              <p class="text-sm text-center text-green-500">
-                Sucesso! Recebemos seu cadastro, em breve faremos contato.
-              </p>
-            </div> -->
             <div v-if="error" class="p-4 mt-4 bg-red-100 rounded-lg">
               <p class="text-sm text-center text-red-500">
                 {{ error }}
@@ -817,17 +812,15 @@
             </div>
           </div>
 
+          <!-- Modal Boleto -->
           <div>
             <modal
-              name="modal-pagamento"
-              :height="300"
+              name="modal-pagamento-boleto"
+              :height="400"
               :maxWidth="400"
               :adaptive="true"
             >
-              <div
-                v-if="formaPagamento.tipo == 1"
-                class="p-8 bg-white rounded-lg shadow"
-              >
+              <div class="p-8 bg-white rounded-lg shadow">
                 <h2 class="text-center font-bold">
                   Confirmação dos Dados de Pagamento
                 </h2>
@@ -899,10 +892,18 @@
                   </p>
                 </div>
               </div>
-              <div
-                v-if="formaPagamento.tipo == 2"
-                class="p-8 bg-white rounded-lg shadow"
-              >
+            </modal>
+          </div>
+
+          <!-- Modal Cartão -->
+          <div>
+            <modal
+              name="modal-pagamento-cartao"
+              :height="310"
+              :maxWidth="400"
+              :adaptive="true"
+            >
+              <div class="p-8 bg-white rounded-lg shadow">
                 <h2 class="text-center font-bold">
                   Confirmação dos Dados de Pagamento
                 </h2>
@@ -1024,7 +1025,7 @@ export default Vue.extend({
   data() {
     return {
       nomeCliente: '',
-      passo: 3,
+      passo: 1,
       valorTotal: 0,
       error: '',
       token: '',
@@ -1077,7 +1078,7 @@ export default Vue.extend({
   },
   mounted() {
     this.obterDadosToken()
-    //retirar obtervaloradesao
+    // //retirar obtervaloradesao
     if (this.passo == 3) this.obterValorAdesao()
   },
   methods: {
@@ -1141,19 +1142,21 @@ export default Vue.extend({
     },
     async mudarPasso() {
       this.passo = this.passo + 1
-      if (this.passo == 2) this.obterValorAdesao()
+      if (this.passo == 2) await this.obterValorAdesao()
 
       window.scrollTo(0, 0)
     },
     async showModal() {
-      this.botaoConfirmar = 'Confirmar Pagamento'
       this.sucesso = false
-      this.$modal.show('modal-pagamento')
+      if (this.formaPagamento.tipo == 1)
+        this.$modal.show('modal-pagamento-boleto')
+      else if (this.formaPagamento.tipo == 2)
+        this.$modal.show('modal-pagamento-cartao')
 
       this.calcularValorCobranca()
     },
     async fecharModal() {
-      this.$modal.hide('modal-pagamento')
+      this.$modal.hide('modal-pagamento-cartao')
       this.$router.push('/')
     },
     obterHeader() {

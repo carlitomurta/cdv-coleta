@@ -11,11 +11,15 @@
         "lint": "yarn lint:js"
     },
     "dependencies": {
+        "@northwalker/vue-hotel-datepicker": "^2.0.7",
         "@nuxtjs/axios": "^5.12.2",
         "@nuxtjs/pwa": "^3.0.2",
         "@nuxtjs/svg": "^0.1.12",
+        "apexcharts": "^3.25.0",
         "core-js": "^3.6.5",
+        "jwt-decode": "^3.1.2",
         "nuxt": "^2.14.6",
+        "vue-apexcharts": "^1.6.0",
         "vue-js-modal": "^2.0.0-rc.6",
         "vue-loading-overlay": "^3.4.2",
         "vue-slick-carousel": "^1.0.6",

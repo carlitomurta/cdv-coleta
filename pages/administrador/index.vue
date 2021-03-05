@@ -5,13 +5,13 @@
         <header class="flex flex-row-reverse h-16 pt-4">
           <div class="flex flex-row-reverse">
             <label
-              @click="alterarPagina(4)"
+              @click="showModal(4)"
               class="pointer h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white bg-green-200 text-grey-400"
             >
               Taxa Adesão R$
             </label>
             <label
-              @click="alterarPagina(3)"
+              @click="showModal(3)"
               class="pointer h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white bg-green-200 text-grey-400"
             >
               Bairros
@@ -134,7 +134,6 @@
                     class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
                     type="button"
                     role="button"
-                    @click="alert"
                   >
                     Consultar
                   </button>
@@ -231,6 +230,156 @@
     </section>
 
     <section>
+      <div>
+        <modal
+          name="modal-bairros"
+          :height="600"
+          :maxWidth="650"
+          :adaptive="true"
+        >
+          <div class="p-8">
+            <h2 class="text-start font-bold">Controle de Bairros</h2>
+            <hr />
+            <div class="flex items-stretch mb-2">
+              <div class="flex-1 text-center">
+                <div
+                  class="mt-4 flex items-start relative mb-4 border-2 w-72 rounded-lg outline border-grey-200 focus-within:border-black"
+                >
+                  <input
+                    v-model="bairro.nome"
+                    type="text"
+                    name="nome"
+                    autocomplete="off"
+                    required
+                    placeholder="Bairro"
+                    class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+                  />
+                  <label
+                    for="nome"
+                    class="absolute top-0 p-4 text-sm duration-300 bg-white -z-1 origin-0"
+                    >Bairro</label
+                  >
+                </div>
+              </div>
+              <div class="flex-1 text-center">
+                <div class="mt-5">
+                  <button
+                    class="block h-12 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                    type="button"
+                    role="button"
+                    @click="cadastrarBairro(bairro.nome)"
+                  >
+                    Cadastrar
+                  </button>
+                </div>
+              </div>
+            </div>
+            <hr />
+
+            <div class="mt-2 overflow-y-scroll">
+              <table class="border-collapse bg-green-100 border-shadow">
+                <thead>
+                  <tr>
+                    <th class="w-2/6 border border-green-300">Bairro</th>
+                    <th class="w-2/12 border border-green-300">Status</th>
+                    <th class="w-2/12 border border-green-300">Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="bairro in listaBairros" :key="bairro.id">
+                    <td class="p-1 border border-green-300">
+                      {{ bairro.nome }}
+                    </td>
+                    <td class="p-1 border border-green-300">
+                      {{ bairro.ativo ? 'Ativo' : 'Inativo' }}
+                    </td>
+                    <td v-if="bairro.ativo" class="p-1 border border-green-300">
+                      <button
+                        class="block h-6 px-6 mx-auto text-center text-white capitalize rounded shadow-md base-button bg-yellow-500"
+                        type="button"
+                        role="button"
+                        @click="inativarAtivarBairro(bairro.id)"
+                      >
+                        Inativar
+                      </button>
+                    </td>
+                    <td
+                      v-if="!bairro.ativo"
+                      class="p-1 border border-green-300"
+                    >
+                      <button
+                        class="block h-6 px-6 mx-auto text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                        type="button"
+                        role="button"
+                        @click="inativarAtivarBairro(bairro.id)"
+                      >
+                        Ativar
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </modal>
+      </div>
+    </section>
+
+    <section>
+      <div>
+        <modal name="modal-taxa" :height="300" :maxWidth="350" :adaptive="true">
+          <div class="p-8">
+            <h2 class="text-start font-bold">Controle da Taxa de Adesão</h2>
+            <hr />
+            <div class="flex items-stretch mb-2">
+              <div class="flex-1 text-center">
+                <div
+                  class="mt-4 w-32 flex items-start relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
+                >
+                  <money
+                    type="text"
+                    name="valor"
+                    autocomplete="off"
+                    required
+                    placeholder="Valor"
+                    class="block w-32 p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+                    v-model="taxa.valor"
+                    v-bind="money"
+                  ></money>
+                  <label
+                    for="valor"
+                    class="absolute top-0 p-4 text-sm duration-300 bg-white -z-1 origin-0"
+                    >Taxa</label
+                  >
+                </div>
+              </div>
+              <div class="flex-1 text-center">
+                <div class="mt-5">
+                  <button
+                    class="block h-12 px-5 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                    type="button"
+                    role="button"
+                    @click="atualizarTaxa(taxa.valor)"
+                  >
+                    Atualizar
+                  </button>
+                </div>
+              </div>
+            </div>
+            <hr />
+
+            <div class="mt-8">
+              <label>Valor Atual da Taxa:</label>
+              <strong class="text-green-500"
+                >R$ {{ taxaAtual.toLocaleString() }}</strong
+              >
+            </div>
+          </div>
+        </modal>
+      </div>
+    </section>
+
+    <section>
       <!-- Loading -->
       <div class="vld-parent">
         <loading
@@ -249,6 +398,10 @@
   cursor: pointer;
 }
 
+.scroll-vertical {
+  overflow-y: scroll;
+}
+
 hr {
   color: rgb(165, 164, 164);
 }
@@ -261,6 +414,7 @@ import VueTheMask from 'vue-the-mask'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VueApexCharts from 'vue-apexcharts'
 import VueHotelDatepicker from '@northwalker/vue-hotel-datepicker'
+import { Money } from 'v-money'
 
 Vue.use(VueTheMask, VueApexCharts)
 
@@ -270,6 +424,8 @@ export default Vue.extend({
       loading: false,
       nome: '',
       pagina: 2,
+      token: {},
+      taxaAtual: 0,
       series: [42, 47, 52, 58, 65],
       chartOptions: {
         chart: {
@@ -301,23 +457,136 @@ export default Vue.extend({
         bairro: 0,
         statusPagamento: 0,
       },
+      bairro: {
+        nome: '',
+      },
+      listaBairros: [],
+      taxa: {
+        valor: '',
+      },
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        suffix: '',
+        precision: 2,
+        masked: false,
+      },
     }
   },
   components: {
     apexchart: VueApexCharts,
     Loading,
     VueHotelDatepicker,
+    Money,
   },
   mounted() {
-    let token = JSON.parse(sessionStorage.getItem('cdv'))
-    this.nome = token.nome
+    this.obterDadosToken()
   },
   methods: {
+    async obterDadosToken() {
+      this.token = JSON.parse(sessionStorage.getItem('cdv'))
+      if (
+        this.token == null ||
+        this.token.token == null ||
+        this.token.token == undefined
+      )
+        this.$router.push((name = '/'))
+      else {
+        this.nome = this.token.nome
+      }
+    },
     alterarPagina(pagina) {
       this.pagina = pagina
     },
-    alert() {
-      alert('OK')
+    async obterBairros() {
+      this.loading = true
+
+      await this.$axios
+        .get('administrador/bairros')
+        .then((res) => {
+          this.loading = false
+          this.listaBairros = res.data.bairros
+        })
+        .catch((err) => {
+          this.loading = false
+        })
+    },
+    async showModal(pagina) {
+      if (pagina == 3) {
+        await this.obterBairros()
+        this.$modal.show('modal-bairros')
+      } else if (pagina == 4) {
+        this.obterTaxa()
+        this.$modal.show('modal-taxa')
+      }
+    },
+    obterHeader() {
+      return {
+        headers: {
+          Authorization: 'Bearer ' + this.token.token,
+        },
+      }
+    },
+    async inativarAtivarBairro(id) {
+      this.loading = true
+      let config = this.obterHeader()
+
+      await this.$axios
+        .put('administrador/bairros/' + id + '/inativa-ativa', {}, config)
+        .then((res) => {
+          this.loading = false
+          this.obterBairros()
+        })
+        .catch((err) => {
+          this.loading = false
+        })
+    },
+    async cadastrarBairro(bairro) {
+      if (this.bairro.nome) {
+        this.loading = true
+        let config = this.obterHeader()
+
+        await this.$axios
+          .post('administrador/bairros', { nome: bairro }, config)
+          .then((res) => {
+            this.loading = false
+            this.bairro.nome = ''
+            this.obterBairros()
+          })
+          .catch((err) => {
+            this.loading = false
+          })
+      }
+    },
+    async obterTaxa() {
+      this.loading = true
+      let config = this.obterHeader()
+
+      await this.$axios
+        .get('financeiro/valor-servico', config)
+        .then((res) => {
+          this.loading = false
+          this.taxaAtual = res.data.valor
+        })
+        .catch((err) => {
+          this.loading = false
+        })
+    },
+    async atualizarTaxa(taxa) {
+      this.loading = true
+      let config = this.obterHeader()
+
+      await this.$axios
+        .put('financeiro/valor-servico', { valor: taxa }, config)
+        .then((res) => {
+          this.loading = false
+          this.taxa.valor = ''
+          this.obterTaxa()
+        })
+        .catch((res) => {
+          this.loading = false
+        })
     },
   },
 })

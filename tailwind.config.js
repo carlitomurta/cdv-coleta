@@ -63,6 +63,7 @@ module.exports = {
                 brand: {
                     leaf: '#92C133',
                     green: '#0D8C34',
+                    yellow: '#FFEEC8'
                 },
             },
             fontFamily: {

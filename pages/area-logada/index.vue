@@ -1078,8 +1078,6 @@ export default Vue.extend({
   },
   mounted() {
     this.obterDadosToken()
-    // //retirar obtervaloradesao
-    if (this.passo == 3) this.obterValorAdesao()
   },
   methods: {
     async salvarAdesao() {

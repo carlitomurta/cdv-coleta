@@ -77,7 +77,7 @@
     <div>
       <modal
         name="modal-cadastro"
-        :height="450"
+        :height="500"
         :maxWidth="400"
         :adaptive="true"
       >
@@ -118,6 +118,21 @@
                 class="absolute top-0 p-4 text-sm duration-300 bg-white -z-1 origin-0"
                 >E-mail</label
               >
+            </div>
+            <div>
+              <select
+                v-model="cadastro.idBairro"
+                class="relative mb-4 w-full border-2 p-4 strong rounded-lg outline border-grey-200 focus-within:border-black"
+              >
+                <option value="0">Selecione um bairro</option>
+                <option
+                  v-for="bairro in listaBairros"
+                  :key="bairro.id"
+                  :value="bairro.id"
+                >
+                  {{ bairro.nome }}
+                </option>
+              </select>
             </div>
             <div
               class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
@@ -229,11 +244,13 @@ export default Vue.extend({
       cadastro: {
         nome: '',
         email: '',
+        idBairro: 0,
         senha: '',
         repitaSenha: '',
       },
       loading: false,
       error: '',
+      listaBairros: [],
     }
   },
   components: {
@@ -246,15 +263,32 @@ export default Vue.extend({
       this.cadastro.senha = ''
       this.cadastro.repitaSenha = ''
     },
-    showModal() {
+    async showModal() {
       this.error = ''
       this.clearCadastro()
+      await this.obterBairros()
       this.$modal.show('modal-cadastro')
+    },
+    async obterBairros() {
+      this.loading = true
+
+      await this.$axios
+        .get('administrador/bairros')
+        .then((res) => {
+          this.loading = false
+          this.listaBairros = res.data.bairros.filter((b) => {
+            return b.ativo
+          })
+        })
+        .catch((res) => {
+          this.loading = false
+        })
     },
     async cadastrarELogin() {
       if (
         !this.cadastro.nome ||
         !this.cadastro.email ||
+        this.cadastro.idBairro == 0 ||
         !this.cadastro.senha ||
         !this.cadastro.repitaSenha
       )
@@ -268,6 +302,7 @@ export default Vue.extend({
       else {
         this.error = ''
         this.loading = true
+
         await this.$axios
           .post('usuarios', this.cadastro)
           .then((res) => {

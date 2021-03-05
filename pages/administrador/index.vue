@@ -42,11 +42,13 @@
               v-if="pagina == 1"
               class="grid ustify-items-start md:justify-items-center mb-2"
             >
-              <strong>Estatísticas de Pagamentos</strong>
+              <strong
+                >Estatísticas de Pagamentos das últimas 100 Adesões</strong
+              >
               <div id="chart-1">
                 <apexchart
                   type="polarArea"
-                  width="450"
+                  width="500"
                   :options="chartOptions"
                   :series="series"
                 ></apexchart>
@@ -423,15 +425,15 @@ export default Vue.extend({
     return {
       loading: false,
       nome: '',
-      pagina: 2,
+      pagina: 1,
       token: {},
       taxaAtual: 0,
-      series: [42, 47, 52, 58, 65],
+      series: [],
       chartOptions: {
         chart: {
           type: 'polarArea',
         },
-        labels: ['Boletos', 'Cartão', 'Em dia', 'Atrasados', 'Cancelados'],
+        labels: ['Boletos', 'Cartão', 'Em dia', 'Vencidos', 'A receber'],
         fill: {
           opacity: 0.8,
         },
@@ -480,11 +482,13 @@ export default Vue.extend({
     VueHotelDatepicker,
     Money,
   },
+  beforeMount() {},
   mounted() {
     this.obterDadosToken()
+    this.obterEstatisticas()
   },
   methods: {
-    async obterDadosToken() {
+    obterDadosToken() {
       this.token = JSON.parse(sessionStorage.getItem('cdv'))
       if (
         this.token == null ||
@@ -498,6 +502,7 @@ export default Vue.extend({
     },
     alterarPagina(pagina) {
       this.pagina = pagina
+      if (this.pagina == 1) this.obterEstatisticas()
     },
     async obterBairros() {
       this.loading = true
@@ -585,6 +590,29 @@ export default Vue.extend({
           this.obterTaxa()
         })
         .catch((res) => {
+          this.loading = false
+        })
+    },
+    async obterEstatisticas() {
+      this.loading = true
+      let config = this.obterHeader()
+
+      await this.$axios
+        .get('administrador/estatisticas', config)
+        .then((res) => {
+          this.loading = false
+
+          let newSeries = [
+            res.data.totalBoletos,
+            res.data.totalCartoes,
+            res.data.emDia,
+            res.data.vencidos,
+            res.data.aReceber,
+          ]
+
+          this.series = newSeries
+        })
+        .catch((err) => {
           this.loading = false
         })
     },

@@ -23,6 +23,7 @@
               Consultas
             </label>
             <label
+              id="inicio"
               @click="alterarPagina(1)"
               class="pointer h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white bg-green-200 text-grey-400"
             >
@@ -60,9 +61,10 @@
               <hr />
               <div class="flex items-stretch mt-2">
                 <div class="flex-1 text-start">
-                  <label>Período da cobrança:</label><br />
+                  <label>Período de vencimento:</label><br />
                   <VueHotelDatepicker
-                    v-model="filtro.periodo"
+                    id="date-picker"
+                    @confirm="setRange"
                     :placeholder="'Selecione um período'"
                     :format="'DD/MM/YYYY'"
                     :separator="'até'"
@@ -105,8 +107,8 @@
                     v-model="filtro.tipoPagamento"
                   >
                     <option value="0">Ambos</option>
-                    <option value="1">Boleto</option>
-                    <option value="2">Cartão</option>
+                    <option value="boleto">Boleto</option>
+                    <option value="credit_card">Cartão</option>
                   </select>
                 </div>
                 <div class="flex-1 text-start">
@@ -115,20 +117,27 @@
                     class="relative mb-4 w-36 border-2 p-3 strong rounded-lg outline border-grey-200 focus-within:border-black"
                     v-model="filtro.bairro"
                   >
-                    <option value="0">Selecione...</option>
-                    <option value="1">Bairro 1</option>
-                    <option value="2">Bairro 2</option>
+                    <option value="0">Todos</option>
+                    <option
+                      v-for="bairro in listaBairros"
+                      :key="bairro.id"
+                      :value="bairro.id"
+                    >
+                      {{ bairro.nome }}
+                    </option>
                   </select>
                 </div>
                 <div class="flex-1 text-start">
                   <label>Status Pagamento:</label><br />
                   <select
                     class="relative mb-4 w-36 border-2 p-3 strong rounded-lg outline border-grey-200 focus-within:border-black"
-                    v-model="filtro.tipoPagamento"
+                    v-model="filtro.statusPagamento"
                   >
-                    <option value="0">Selecione...</option>
-                    <option value="1">Pago</option>
-                    <option value="2">Pendente</option>
+                    <option value="0">Todos</option>
+                    <option value="CONFIRMED">Pago</option>
+                    <option value="PENDING">Aguardando Pagamento</option>
+                    <option value="REFUNDED">Estornado</option>
+                    <option value="OVERDUE">Vencida</option>
                   </select>
                 </div>
                 <div class="flex-1 text-start mt-6">
@@ -136,6 +145,7 @@
                     class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
                     type="button"
                     role="button"
+                    @click="filtrarVendas"
                   >
                     Consultar
                   </button>
@@ -162,65 +172,30 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr v-for="r in relatorioVendas" :key="r">
                       <td class="p-1 border border-green-300">
-                        Cliente da Silva Souza
+                        {{ r.cliente }}
                       </td>
-                      <td class="p-1 border border-green-300">18/02/2021</td>
-                      <td class="p-1 border border-green-300">Boleto</td>
-                      <td class="p-1 border border-green-300">Pendente</td>
-                      <td class="p-1 border border-green-300"></td>
-                    </tr>
-                    <tr>
                       <td class="p-1 border border-green-300">
-                        Jão José da Silva
+                        {{ r.data }}
                       </td>
-                      <td class="p-1 border border-green-300">22/03/2021</td>
                       <td class="p-1 border border-green-300">
-                        Cartão de Crédito
+                        {{
+                          r.tipoPagamento == 'BOLETO'
+                            ? 'Boleto'
+                            : 'Cartão de Crédito'
+                        }}
                       </td>
-                      <td class="p-1 border border-green-300">Pago</td>
-                      <td class="p-1 border border-green-300">22/03/2021</td>
-                    </tr>
-                    <tr>
                       <td class="p-1 border border-green-300">
-                        Caetano Veloso
+                        {{ r.statusPagamento }}
                       </td>
-                      <td class="p-1 border border-green-300">10/01/2021</td>
-                      <td class="p-1 border border-green-300">Boleto</td>
-                      <td class="p-1 border border-green-300">Cancelado</td>
-                      <td class="p-1 border border-green-300"></td>
-                    </tr>
-                    <tr>
                       <td class="p-1 border border-green-300">
-                        Fernando Henrique Cardoso
+                        {{
+                          r.tipoPagamento == 'CREDIT_CARD'
+                            ? r.data
+                            : r.dataPagamento
+                        }}
                       </td>
-                      <td class="p-1 border border-green-300">02/03/2021</td>
-                      <td class="p-1 border border-green-300">
-                        Cartão de Crédito
-                      </td>
-                      <td class="p-1 border border-green-300">Pago</td>
-                      <td class="p-1 border border-green-300">02/03/2021</td>
-                    </tr>
-                    <tr>
-                      <td class="p-1 border border-green-300">
-                        Maria Cecília de Meireles
-                      </td>
-                      <td class="p-1 border border-green-300">15/02/2021</td>
-                      <td class="p-1 border border-green-300">Boleto</td>
-                      <td class="p-1 border border-green-300">Pago</td>
-                      <td class="p-1 border border-green-300">17/02/2021</td>
-                    </tr>
-                    <tr>
-                      <td class="p-1 border border-green-300">
-                        Monteiro Lobato
-                      </td>
-                      <td class="p-1 border border-green-300">29/01/2021</td>
-                      <td class="p-1 border border-green-300">
-                        Cartão de Crédito
-                      </td>
-                      <td class="p-1 border border-green-300">Estornado</td>
-                      <td class="p-1 border border-green-300"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -428,7 +403,7 @@ export default Vue.extend({
       pagina: 1,
       token: {},
       taxaAtual: 0,
-      series: [],
+      series: [1, 1, 1, 1, 1],
       chartOptions: {
         chart: {
           type: 'polarArea',
@@ -454,10 +429,11 @@ export default Vue.extend({
         ],
       },
       filtro: {
-        periodo: '',
-        tipoPagamento: 0,
+        dataInicio: '',
+        dataFim: '',
+        tipoPagamento: '0',
         bairro: 0,
-        statusPagamento: 0,
+        statusPagamento: '0',
       },
       bairro: {
         nome: '',
@@ -474,6 +450,7 @@ export default Vue.extend({
         precision: 2,
         masked: false,
       },
+      relatorioVendas: [],
     }
   },
   components: {
@@ -482,10 +459,9 @@ export default Vue.extend({
     VueHotelDatepicker,
     Money,
   },
-  beforeMount() {},
-  mounted() {
+  async mounted() {
     this.obterDadosToken()
-    this.obterEstatisticas()
+    await this.obterEstatisticas()
   },
   methods: {
     obterDadosToken() {
@@ -500,9 +476,10 @@ export default Vue.extend({
         this.nome = this.token.nome
       }
     },
-    alterarPagina(pagina) {
+    async alterarPagina(pagina) {
       this.pagina = pagina
-      if (this.pagina == 1) this.obterEstatisticas()
+      if (this.pagina == 1) await this.obterEstatisticas()
+      else if (this.pagina == 2) await this.obterBairros()
     },
     async obterBairros() {
       this.loading = true
@@ -615,6 +592,30 @@ export default Vue.extend({
         .catch((err) => {
           this.loading = false
         })
+    },
+    async filtrarVendas() {
+      this.loading = true
+      let config = this.obterHeader()
+
+      await this.$axios
+        .get(
+          `administrador/vendas/${this.filtro.dataInicio}/dataInicio/${this.filtro.dataFim}/dataFim/${this.filtro.bairro}/bairro/${this.filtro.tipoPagamento}/tipoPagamento/${this.filtro.statusPagamento}/statusPagamento`,
+          config
+        )
+        .then((res) => {
+          this.loading = false
+          this.relatorioVendas = res.data.filtroDeVendas
+        })
+        .catch((err) => {
+          this.loading = false
+        })
+    },
+    setRange(date) {
+      let _dateStart = date.start.split('/')
+      this.filtro.dataInicio = `${_dateStart[2]}-${_dateStart[1]}-${_dateStart[0]}`
+
+      let _dateEnd = date.end.split('/')
+      this.filtro.dataFim = `${_dateEnd[2]}-${_dateEnd[1]}-${_dateEnd[0]}`
     },
   },
 })

@@ -250,12 +250,10 @@
                 class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
               >
                 <input
-                  v-model="contact.bairro"
+                  v-model="bairro"
                   type="text"
                   name="bairro"
-                  maxlength="50"
-                  autocomplete="off"
-                  placeholder="Bairro"
+                  disabled
                   required
                   class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
                 />
@@ -1025,6 +1023,7 @@ export default Vue.extend({
   data() {
     return {
       nomeCliente: '',
+      bairro: '',
       passo: 1,
       valorTotal: 0,
       error: '',
@@ -1085,7 +1084,6 @@ export default Vue.extend({
         !this.contact.endereco ||
         !this.contact.numeroEndereco ||
         !this.contact.celular ||
-        !this.contact.bairro ||
         !this.contact.participarDoWhatsapp ||
         !this.contact.jaSeparaReciclavel ||
         !this.contact.DesejoDaColeta ||
@@ -1121,6 +1119,7 @@ export default Vue.extend({
         this.$router.push((name = '/'))
       else {
         this.nomeCliente = this.token.nome
+        this.bairro = this.token.bairro
       }
     },
     async obterValorAdesao() {

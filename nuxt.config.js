@@ -53,7 +53,7 @@ export default {
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-        baseURL: 'http://localhost:53496/coleta-seletiva/v1/'
+        baseURL: 'https://coletadevizinhanca.azurewebsites.net/coleta-seletiva/v1/'
     },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)

@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/area-logada", {data:[{}],fetch:[],mutations:void 0});

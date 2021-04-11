@@ -36,12 +36,16 @@
     <section id="about" class="bg-brand-green">
       <div class="container mx-auto">
         <div class="grid grid-cols-1 gap-8 py-16 lg:grid-cols-2 lg:py-20">
-          <div class="flex-1 hidden lg:block">
-            <img
-              class="w-auto h-auto mx-auto"
-              src="~/static/recyclage.svg"
-              alt="people_at_boat"
-            />
+          <div class="flex-1 hidden lg:block bg-white">
+            <iframe
+              width="592"
+              height="472"
+              src="https://www.youtube.com/embed/pEZ2Uu3sSKY?controls=0"
+              title="Coleta de Vizinhança"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
           </div>
           <div class="flex-1">
             <h1 class="mb-8 text-2xl text-white font-head lg:text-4xl">

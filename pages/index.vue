@@ -40,7 +40,7 @@
             <iframe
               width="592"
               height="472"
-              src="https://www.youtube.com/embed/pEZ2Uu3sSKY?controls=0"
+              src="https://www.youtube.com/embed/J6_kXvJV2NY?controls=0"
               title="Coleta de Vizinhança"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -58,7 +58,7 @@
               seletiva: acessível aos moradores da região leste de Belo
               Horizonte economicamente sustentável para as cooperativas de
               catadores seguro, pela redução de quaisquer riscos de contaminação
-              no trabalho (Botão indicando o campo das medidas de segurança)
+              no trabalho.
               <p>
                 Nossa principal ferramenta é a cooperação entre vizinhos e
                 catadores. Quando a vizinhança se junta, o trabalho dos

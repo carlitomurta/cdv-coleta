@@ -2,86 +2,7 @@
   <div>
     <!-- Pagamento não finalizado -->
     <section v-if="!statusPagamentoCliente">
-      <section v-if="passo == 1" class="mb-2 bg-green-200">
-        <div class="container mx-auto mt-8 p-3">
-          <h1 class="mb-2">
-            Bem vindo(a),<strong> {{ nomeCliente }}.</strong>
-          </h1>
-          <h1 class="mb-6 text-2xl font-head text-grey-400 lg:text-4xl">
-            Informações da coleta na sua vizinhança
-          </h1>
-          <h3 class="mb-6 text-base text-grey-400">
-            <h1>Coletamos esses materiais:</h1>
-            <p>
-              <strong>Papel:</strong> jornal, revista, caderno, livro, papelão,
-              caixa de sapato, caixa de sabão em pó, caixa de leite ou suco,
-              rolo de papel (higiênico, papel alumínio ou de plástico filme),
-              saco de pão, papel propaganda de supermercado, caixa de remédio,
-              caixa de congelados, caixa de pizza (sem estar suja de gordura)
-              boleto de cobrança, propaganda política, panfletos em geral.
-            </p>
-            <p>
-              <strong>Plástico:</strong> garrafa de refri, de óleo, de suco, de
-              vinagre, de água, galão de água, garrafa de água sanitária,
-              embalagem de shampoo, garrafas de álcool em gel e produtos de
-              limpeza, plástico de embalagens de papel higiênico, de pão de
-              forma, de batatinha frita congelada. Sacolinhas de supermercado,
-              embalagens de manteiga, margarina, maionese, creamcheese,
-              achocolatados, sorvetes. Cadeira de plástico quebrada ou mesa,
-              potes quebrados, canudinhos, brinquedos quebrados, desodorante
-              rollon. Vaso de planta de plástico, tampinhas de garrafa em geral,
-              tampinhas de cremes e tampinha de pomadas.
-            </p>
-            <p>
-              <strong>Metal:</strong> latinhas de cerveja ou refri, lata de
-              conserva em geral, lata de leite em pó ou achocolatado, panela
-              velha, marmitex de alumínio (limpo), desodorante spray e qualquer
-              embalagem aerossol, sprays em geral, lata de tinta vazia.
-            </p>
-            <p>
-              <strong>Vidro:</strong> garrafas em geral, vidros de perfume,
-              vidros de conserva em geral.
-            </p>
-
-            <h1 class="mt-4">Evitar:</h1>
-            <h3 class="mb-6 text-base text-grey-400">
-              <p>
-                <strong>Papel:</strong> papéis engordurados, caixas de ovo ou
-                papel fotográfico.
-              </p>
-              <p>
-                <strong>Plástico:</strong> caixas de ovo de plástico ou isopor e
-                hortifruti q vem em embalagens de plástico, isopor de alimento,
-                acrílico, embalagens metalizadas de biscoito ou chips,
-                embalagens de alguns iogurtes (como leite fermentados), garrafa
-                pet rosa ou vermelha.
-              </p>
-              <p>
-                <strong>Vidro:</strong> espelhos quebrados ou vidro temperado
-                quebrado.
-              </p>
-              <br />
-              <p>
-                Ninguém é obrigado a saber tudo que é reciclável e o que não é ,
-                vamos aprendendo... Na dúvida, coloca no reciclável e vamos
-                aprendendo juntos nos grupos de vizinhança.Qualquer dúvida, tamo
-                aí!
-              </p>
-            </h3>
-          </h3>
-          <div>
-            <button
-              class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
-              type="button"
-              role="button"
-              @click.prevent="mudarPasso"
-            >
-              OK! Prosseguir
-            </button>
-          </div>
-        </div>
-      </section>
-      <section v-if="passo == 2" class="bg-brand-green">
+      <section v-if="passo == 1" class="bg-brand-green">
         <div class="container mx-auto mt-8 p-3">
           <div>
             <h1
@@ -189,6 +110,26 @@
                     for="celular"
                     class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
                     >Celular</label
+                  >
+                </div>
+                <div
+                  class="relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
+                >
+                  <the-mask
+                    :mask="['#####-###']"
+                    v-model="contact.cep"
+                    type="text"
+                    name="cep"
+                    autocomplete="off"
+                    placeholder="Cep"
+                    @input="obterEndereco()"
+                    required
+                    class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+                  />
+                  <label
+                    for="cep"
+                    class="absolute top-0 p-4 text-sm duration-300 bg-white text-grey-400 -z-1 origin-0"
+                    >Cep</label
                   >
                 </div>
                 <div
@@ -515,7 +456,7 @@
           </div>
         </div>
       </section>
-      <section v-if="passo == 3" class="bg-green-100">
+      <section v-if="passo == 2" class="bg-green-100">
         <div class="container mx-auto mt-6 p-3">
           <div class="p-3 bg-white rounded-lg shadow">
             <h1 class="mb-6 text-2xl font-head text-grey-400 lg:text-4xl">
@@ -760,55 +701,18 @@
                   v-model="parcelamento"
                 >
                   <option value="0">Selecione...</option>
-                  <option value="1">
-                    1 x de R$ {{ (precoAdesao * 12).toLocaleString(2) }} sem
-                    juros
-                  </option>
-                  <option value="2">
-                    2 x de R$
-                    {{ (precoAdesao * 6).toLocaleString(2) }} sem juros
-                  </option>
-                  <option value="3">
-                    3 x de R$
-                    {{ (precoAdesao * 4).toLocaleString(2) }} sem juros
-                  </option>
-                  <option value="4">
-                    4 x de R$
-                    {{ ((precoAdesao * 12) / 4).toLocaleString(2) }} sem juros
-                  </option>
-                  <option value="5">
-                    5 x de R$
-                    {{ ((precoAdesao * 12) / 5).toLocaleString(2) }} sem juros
-                  </option>
-                  <option value="6">
-                    6 x de R$
-                    {{ ((precoAdesao * 12) / 2).toLocaleString(2) }} sem juros
-                  </option>
-                  <option value="7">
-                    7 x de R$
-                    {{ ((precoAdesao * 12) / 7).toLocaleString(2) }} sem juros
-                  </option>
-                  <option value="8">
-                    8 x de R$
-                    {{ ((precoAdesao * 12) / 8).toLocaleString(2) }} sem juros
-                  </option>
-                  <option value="9">
-                    9 x de R$
-                    {{ ((precoAdesao * 12) / 9).toLocaleString(2) }} sem juros
-                  </option>
-                  <option value="10">
-                    10 x de R$
-                    {{ ((precoAdesao * 12) / 10).toLocaleString(2) }}
-                    sem juros
-                  </option>
-                  <option value="11">
-                    11 x de R$
-                    {{ ((precoAdesao * 12) / 11).toLocaleString(2) }}
-                    sem juros
-                  </option>
-                  <option value="12">
-                    12 x de R$ {{ precoAdesao.toLocaleString(2) }} sem juros
-                  </option>
+                  <option value="1">1 x sem juros</option>
+                  <option value="2">2 x sem juros</option>
+                  <option value="3">3 x sem juros</option>
+                  <option value="4">4 x sem juros</option>
+                  <option value="5">5 x sem juros</option>
+                  <option value="6">6 x sem juros</option>
+                  <option value="7">7 x sem juros</option>
+                  <option value="8">8 x sem juros</option>
+                  <option value="9">9 x sem juros</option>
+                  <option value="10">10 x sem juros</option>
+                  <option value="11">11 x sem juros</option>
+                  <option value="12">12 x sem juros</option>
                 </select>
               </div>
             </div>
@@ -878,11 +782,11 @@
                     </button>
                   </div>
 
-                  <div v-if="sucesso" class="p-4 mt-4 bg-green-100 rounded-lg">
+                  <!-- <div v-if="sucesso" class="p-4 mt-4 bg-green-100 rounded-lg">
                     <p class="text-sm text-center text-green-500">
                       :) Obrigado, seu Boleto foi gerado com sucesso!
                     </p>
-                  </div>
+                  </div> -->
                   <div v-if="error" class="p-2 mt-1 bg-red-100 rounded-lg">
                     <p
                       v-for="err in error"
@@ -1100,6 +1004,7 @@ export default Vue.extend({
         complemento: '',
         cpfCnpj: '',
         celular: '',
+        cep: '',
         bairro: '',
         participarDoWhatsapp: 0,
         jaSeparaReciclavel: 0,
@@ -1138,6 +1043,7 @@ export default Vue.extend({
   async mounted() {
     await this.obterDadosToken()
     await this.statusPagamento()
+    await this.obterValorAdesao()
   },
   methods: {
     async salvarAdesao() {
@@ -1200,7 +1106,7 @@ export default Vue.extend({
     },
     async mudarPasso() {
       this.passo = this.passo + 1
-      if (this.passo == 2) await this.obterValorAdesao()
+      if (this.passo == 1) await this.obterValorAdesao()
 
       window.scrollTo(0, 0)
     },
@@ -1246,7 +1152,9 @@ export default Vue.extend({
           .post('financeiro/pagamento/boleto', this.pagamentoBoleto, config)
           .then((res) => {
             this.loading = false
-            this.sucesso = true
+            this.downloadBoleto()
+            this.statusPagamentoCliente = true
+            this.passo = 1
           })
           .catch((err) => {
             this.loading = false
@@ -1273,6 +1181,8 @@ export default Vue.extend({
           .then((res) => {
             this.loading = false
             this.sucesso = true
+            this.passo = 1
+            this.statusPagamentoCliente = true
           })
           .catch((err) => {
             this.loading = false
@@ -1308,7 +1218,21 @@ export default Vue.extend({
           this.loading = false
         })
     },
-    alterarPagina(pagina) {},
+    async obterEndereco() {
+      if (this.contact.cep.length == 8) {
+        this.loading = true
+        await this.$axios
+          .get(`https://viacep.com.br/ws/${this.contact.cep}/json/`)
+          .then((res) => {
+            this.loading = false
+            this.contact.endereco = res.data.logradouro
+            this.contact.complemento = res.data.complemento
+          })
+          .catch((err) => {
+            this.loading = false
+          })
+      }
+    },
   },
 })
 </script>

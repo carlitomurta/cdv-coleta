@@ -757,7 +757,10 @@
                   <div class="mt-2 p-2 mb-4">
                     <label>Valor da Cobrança:</label>
                     <strong class="font-bold text-green-500"
-                      >R$ {{ valorCobranca.toLocaleString() }}</strong
+                      >R$
+                      {{
+                        valorCobranca.toFixed(2).toString().replace('.', ',')
+                      }}</strong
                     >
                   </div>
                   <div v-if="!sucesso">
@@ -771,22 +774,6 @@
                     </button>
                   </div>
 
-                  <div v-if="sucesso">
-                    <button
-                      class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
-                      type="button"
-                      role="button"
-                      @click="downloadBoleto"
-                    >
-                      Baixar Boleto
-                    </button>
-                  </div>
-
-                  <!-- <div v-if="sucesso" class="p-4 mt-4 bg-green-100 rounded-lg">
-                    <p class="text-sm text-center text-green-500">
-                      :) Obrigado, seu Boleto foi gerado com sucesso!
-                    </p>
-                  </div> -->
                   <div v-if="error" class="p-2 mt-1 bg-red-100 rounded-lg">
                     <p
                       v-for="err in error"
@@ -822,8 +809,11 @@
                     <label>Parcelamento:</label>
                     <strong class="font-bold text-green-500">{{
                       parcelamento +
-                      ' x de ' +
-                      ((precoAdesao * 12) / parcelamento).toLocaleString() +
+                      ' x de R$ ' +
+                      ((precoAdesao * 12) / parcelamento)
+                        .toFixed(2)
+                        .toString()
+                        .replace('.', ',') +
                       ' sem juros'
                     }}</strong>
                   </div>
@@ -902,11 +892,6 @@
           <header class="flex flex-row-reverse h-16 pt-4">
             <div class="flex flex-row-reverse">
               <label
-                class="pointer h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white bg-green-200 text-grey-400"
-              >
-                Segunda Via
-              </label>
-              <label
                 @click="showModal(3)"
                 class="pointer h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white bg-green-200 text-grey-400"
               >
@@ -939,6 +924,49 @@
           <div class="p-3 bg-white rounded-lg shadow">
             <div v-if="pagina == 1" class="grid justify-items-center mb-2">
               <strong>Meu Histórico de Contribuições</strong>
+              <hr />
+              <div class="mt-2">
+                <table class="table-fixed border-collapse border-shadow">
+                  <thead>
+                    <tr>
+                      <th class="w-40 border">Data Cobrança</th>
+                      <th class="w-40 border">Tipo Pagamento</th>
+                      <th class="w-40 border">Periodicidade</th>
+                      <th class="w-20 border">Status</th>
+                      <th class="w-40 border">Valor R$</th>
+                      <th class="w-40 border">Data Pagamento</th>
+                      <th class="w-20 border">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="h in meuHistorico" :key="h">
+                      <td class="p-1 border">{{ h.dataEmissao }}</td>
+                      <td class="p-1 border">{{ h.tipoDePagamento }}</td>
+                      <td class="p-1 border">{{ h.cicloDePagamento }}</td>
+                      <td class="p-1 border">{{ h.statusPagamento }}</td>
+                      <td class="p-1 border">
+                        R$ {{ h.valor.toString().replace('.', ',') }}
+                      </td>
+                      <td class="p-1 border">
+                        {{
+                          h.tipoDePagamento != 'Boleto'
+                            ? h.dataEmissao
+                            : h.dataPagamento
+                        }}
+                      </td>
+                      <td class="p-1 border">
+                        <button
+                          v-bind:disabled="h.tipoDePagamento != 'Boleto'"
+                          class="block h-6 px-3 text-center text-white shadow-md bg-brand-green"
+                          type="button"
+                        >
+                          2ª Via
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -987,7 +1015,7 @@ export default Vue.extend({
       nomeCliente: '',
       statusPagamentoCliente: false,
       bairro: '',
-      passo: 1,
+      passo: 2,
       pagina: 1,
       valorTotal: 0,
       error: '',
@@ -995,7 +1023,7 @@ export default Vue.extend({
       loading: false,
       sucesso: false,
       precoAdesao: 0,
-      valorCobranca: 0,
+      valorCobranca: Number(0),
       parcelamento: '0',
       contact: {
         email: '',
@@ -1035,6 +1063,7 @@ export default Vue.extend({
         diaVencimento: 0,
         valor: 0,
       },
+      meuHistorico: [],
     }
   },
   components: {
@@ -1043,7 +1072,11 @@ export default Vue.extend({
   async mounted() {
     await this.obterDadosToken()
     await this.statusPagamento()
-    await this.obterValorAdesao()
+    if (!this.statusPagamentoCliente) {
+      await this.obterValorAdesao()
+    } else if (this.statusPagamentoCliente) {
+      await this.obterMeuHistorico()
+    }
   },
   methods: {
     async salvarAdesao() {
@@ -1154,7 +1187,6 @@ export default Vue.extend({
             this.loading = false
             this.downloadBoleto()
             this.statusPagamentoCliente = true
-            this.passo = 1
           })
           .catch((err) => {
             this.loading = false
@@ -1181,7 +1213,6 @@ export default Vue.extend({
           .then((res) => {
             this.loading = false
             this.sucesso = true
-            this.passo = 1
             this.statusPagamentoCliente = true
           })
           .catch((err) => {
@@ -1208,7 +1239,7 @@ export default Vue.extend({
       this.loading = true
       let config = this.obterHeader()
 
-      this.$axios
+      await this.$axios
         .get(`financeiro/cliente/${this.token.email}/email/pagamento`, config)
         .then((res) => {
           this.loading = false
@@ -1233,6 +1264,24 @@ export default Vue.extend({
           })
       }
     },
+    async obterMeuHistorico() {
+      let config = this.obterHeader()
+      this.loading = true
+
+      await this.$axios
+        .get(
+          `financeiro/cliente/${this.token.email}/email/historico-pagamentos`,
+          config
+        )
+        .then((res) => {
+          this.loading = false
+          this.meuHistorico = res.data.historicoPagamentos
+        })
+        .catch((err) => {
+          this.loading = false
+        })
+    },
+    alterarPagina(pagina) {},
   },
 })
 </script>

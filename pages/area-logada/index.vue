@@ -1015,7 +1015,7 @@ export default Vue.extend({
       nomeCliente: '',
       statusPagamentoCliente: false,
       bairro: '',
-      passo: 2,
+      passo: 1,
       pagina: 1,
       valorTotal: 0,
       error: '',
@@ -1187,6 +1187,7 @@ export default Vue.extend({
             this.loading = false
             this.downloadBoleto()
             this.statusPagamentoCliente = true
+            this.obterMeuHistorico()
           })
           .catch((err) => {
             this.loading = false
@@ -1214,6 +1215,7 @@ export default Vue.extend({
             this.loading = false
             this.sucesso = true
             this.statusPagamentoCliente = true
+            this.obterMeuHistorico()
           })
           .catch((err) => {
             this.loading = false

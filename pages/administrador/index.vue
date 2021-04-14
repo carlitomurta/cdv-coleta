@@ -8,10 +8,10 @@
               @click="showModal(4)"
               class="pointer h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white bg-green-200 text-grey-400"
             >
-              Taxa Adesão R$
+              Grupos Rotas
             </label>
             <label
-              @click="showModal(3)"
+              @click="alterarPagina(3)"
               class="pointer h-12 px-4 py-3 mr-2 font-bold text-center capitalize rounded-lg dark:text-white bg-green-200 text-grey-400"
             >
               Bairros
@@ -56,7 +56,7 @@
               </div>
             </div>
 
-            <div v-if="pagina == 2" class="grid ustify-items-start mb-2">
+            <div v-if="pagina == 2" class="grid justify-items-start mb-2">
               <strong>Selecione abaixo os filtros para sua pesquisa:</strong>
               <hr />
               <div class="flex items-stretch mt-2">
@@ -201,12 +201,114 @@
                 </table>
               </div>
             </div>
+
+            <!-- Bairros -->
+            <div v-if="pagina == 3" class="grid mb-2">
+              <strong>Controle de Bairros</strong>
+              <hr />
+              <div class="flex items-stretch mt-2">
+                <div class="flex-1 text-start">
+                  <div
+                    class="mt-4 flex items-start relative mb-4 border-2 w-64 rounded-lg outline border-grey-200 focus-within:border-black"
+                  >
+                    <input
+                      v-model="bairro.nome"
+                      type="text"
+                      name="nome"
+                      autocomplete="off"
+                      required
+                      placeholder="Bairro"
+                      class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
+                    />
+                    <label
+                      for="nome"
+                      class="absolute top-0 p-4 text-sm duration-300 bg-white -z-1 origin-0"
+                      >Bairro</label
+                    >
+                  </div>
+                </div>
+                <div class="flex-1 text-start">
+                  <label>Grupo Rota:</label><br />
+                  <select
+                    class="relative mb-4 w-36 border-2 p-3 strong rounded-lg outline border-grey-200 focus-within:border-black"
+                    v-model="bairro.grupoRota"
+                  >
+                    <option value="0">Selecione</option>
+                  </select>
+                </div>
+                <div class="flex-1 text-start">
+                  <div class="mt-5">
+                    <button
+                      class="block h-10 px-5 mx-auto font-bold text-white capitalize rounded shadow-md base-button bg-brand-green"
+                      type="button"
+                      role="button"
+                      @click="cadastrarBairro(bairro.nome)"
+                    >
+                      Cadastrar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <hr />
+
+              <div class="mt-2 overflow-y-scroll flex justify-center">
+                <table class="border-collapse bg-green-100 border-shadow">
+                  <thead>
+                    <tr>
+                      <th class="w-40 border border-green-300">Bairro</th>
+                      <th class="w-20 border border-green-300">Status</th>
+                      <th class="w-40 border border-green-300">Possui Rota</th>
+                      <th class="w-40 border border-green-300">Ação</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="bairro in listaBairros" :key="bairro.id">
+                      <td class="p-1 border border-green-300">
+                        {{ bairro.nome }}
+                      </td>
+                      <td class="p-1 border border-green-300">
+                        {{ bairro.ativo ? 'Ativo' : 'Inativo' }}
+                      </td>
+                      <td class="p-1 border border-green-300">
+                        {{ bairro.possuiRota ? 'Sim' : 'Não' }}
+                      </td>
+                      <td
+                        v-if="bairro.ativo"
+                        class="p-1 border border-green-300"
+                      >
+                        <button
+                          class="block h-6 px-6 mx-auto text-center text-white capitalize rounded shadow-md base-button bg-yellow-500"
+                          type="button"
+                          role="button"
+                          @click="inativarAtivarBairro(bairro.id)"
+                        >
+                          Inativar
+                        </button>
+                      </td>
+                      <td
+                        v-if="!bairro.ativo"
+                        class="p-1 border border-green-300"
+                      >
+                        <button
+                          class="block h-6 px-6 mx-auto text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                          type="button"
+                          role="button"
+                          @click="inativarAtivarBairro(bairro.id)"
+                        >
+                          Ativar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section>
+    <!-- <section>
       <div>
         <modal
           name="modal-bairros"
@@ -300,7 +402,7 @@
           </div>
         </modal>
       </div>
-    </section>
+    </section> -->
 
     <section>
       <div>
@@ -437,6 +539,7 @@ export default Vue.extend({
       },
       bairro: {
         nome: '',
+        grupoRota: 0,
       },
       listaBairros: [],
       taxa: {
@@ -479,7 +582,7 @@ export default Vue.extend({
     async alterarPagina(pagina) {
       this.pagina = pagina
       if (this.pagina == 1) await this.obterEstatisticas()
-      else if (this.pagina == 2) await this.obterBairros()
+      else if (this.pagina == 3) await this.obterBairros()
     },
     async obterBairros() {
       this.loading = true
@@ -530,7 +633,11 @@ export default Vue.extend({
         let config = this.obterHeader()
 
         await this.$axios
-          .post('administrador/bairros', { nome: bairro }, config)
+          .post(
+            'administrador/bairros',
+            { nome: this.bairro.nome, possuiRota: this.bairro.possuiRota },
+            config
+          )
           .then((res) => {
             this.loading = false
             this.bairro.nome = ''

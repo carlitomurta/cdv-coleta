@@ -271,8 +271,9 @@
                   <thead>
                     <tr>
                       <th class="w-40 border border-green-300">Bairro</th>
-                      <th class="w-20 border border-green-300">Status</th>
                       <th class="w-40 border border-green-300">Possui Rota</th>
+                      <th class="w-40 border border-green-300">Grupo Rota</th>
+                      <th class="w-40 border border-green-300">Valor R$</th>
                       <th class="w-40 border border-green-300">Ação</th>
                     </tr>
                   </thead>
@@ -282,10 +283,19 @@
                         {{ bairro.nome }}
                       </td>
                       <td class="p-1 border border-green-300">
-                        {{ bairro.ativo ? 'Ativo' : 'Inativo' }}
+                        {{ bairro.possuiRota ? 'Sim' : 'Não' }}
                       </td>
                       <td class="p-1 border border-green-300">
-                        {{ bairro.possuiRota ? 'Sim' : 'Não' }}
+                        {{ bairro.grupoRota }}
+                      </td>
+                      <td class="p-1 border border-green-300">
+                        {{
+                          'R$ ' +
+                          parseFloat(bairro.valor)
+                            .toFixed(2)
+                            .toString()
+                            .replace('.', ',')
+                        }}
                       </td>
                       <td
                         v-if="bairro.ativo"
@@ -295,22 +305,10 @@
                           class="block h-6 px-6 mx-auto text-center text-white capitalize rounded shadow-md base-button bg-yellow-500"
                           type="button"
                           role="button"
-                          @click="inativarAtivarBairro(bairro.id)"
+                          title="Mudar o bairro de Grupo de Rota"
+                          @click="mudarRotaModal(bairro)"
                         >
-                          Inativar
-                        </button>
-                      </td>
-                      <td
-                        v-if="!bairro.ativo"
-                        class="p-1 border border-green-300"
-                      >
-                        <button
-                          class="block h-6 px-6 mx-auto text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
-                          type="button"
-                          role="button"
-                          @click="inativarAtivarBairro(bairro.id)"
-                        >
-                          Ativar
+                          Mudar Rota
                         </button>
                       </td>
                     </tr>
@@ -444,6 +442,71 @@
       </div>
     </section>
 
+    <!-- Modal Trocar Bairro de Grupo -->
+    <section>
+      <div>
+        <modal
+          name="modal-trocar-grupo"
+          :height="250"
+          :width="600"
+          :adaptive="true"
+        >
+          <div class="p-8">
+            <h2 class="text-start font-bold">
+              Alterar Bairro de Grupo de Rota
+            </h2>
+            <hr />
+            <div class="flex items-stretch mb-2">
+              <div class="flex-1 w-20 text-start">
+                <strong>Nome do Bairro:</strong><br />
+                <label for="">{{ nomeBairroMudar }}</label>
+              </div>
+              <div class="flex-1 text-start">
+                <label>Grupo Rota:</label><br />
+                <select
+                  class="relative mb-4 w-36 border-2 p-3 strong rounded-lg outline border-grey-200 focus-within:border-black"
+                  v-model="idGrupoRota"
+                >
+                  <option value="0">Selecione</option>
+                  <option v-for="g in gruposRotas" :key="g.id" :value="g.id">
+                    {{ g.nome }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex-1 text-start mt-5">
+                <button
+                  class="block h-10 px-5 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                  type="button"
+                  role="button"
+                  :disabled="idGrupoRota == 0"
+                  @click="mudarRotaBairro"
+                >
+                  Salvar
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Erro Cadastrar Grupo -->
+          <div v-if="error" class="p-2 mt-1 bg-red-100 rounded-lg">
+            <p
+              v-for="err in error"
+              :key="err.descricao"
+              class="text-sm text-center text-red-500"
+            >
+              {{ err.descricao }}
+            </p>
+          </div>
+
+          <!-- Sucesso Alterar Grupo -->
+          <div v-if="sucesso" class="p-2 mt-1 bg-green-200 rounded-lg">
+            <p class="text-sm text-center text-green-500">
+              {{ sucesso }}
+            </p>
+          </div>
+        </modal>
+      </div>
+    </section>
+
     <section>
       <!-- Loading -->
       <div class="vld-parent">
@@ -491,6 +554,7 @@ export default Vue.extend({
       error: '',
       pagina: 1,
       token: {},
+      sucesso: '',
       taxaAtual: 0,
       series: [1, 1, 1, 1, 1],
       chartOptions: {
@@ -527,6 +591,7 @@ export default Vue.extend({
       bairro: {
         nome: '',
         idGrupoRota: 0,
+        grupoRota: '',
       },
       listaBairros: [],
       grupo: {
@@ -544,6 +609,9 @@ export default Vue.extend({
         masked: false,
       },
       relatorioVendas: [],
+      nomeBairroMudar: '',
+      idBairroMudar: 0,
+      idGrupoRota: 0,
     }
   },
   components: {
@@ -617,18 +685,34 @@ export default Vue.extend({
         },
       }
     },
-    async inativarAtivarBairro(id) {
+    mudarRotaModal(bairro) {
+      this.nomeBairroMudar = bairro.nome
+      this.idBairroMudar = bairro.id
+      this.obterGruposRotas()
+
+      this.$modal.show('modal-trocar-grupo')
+    },
+    async mudarRotaBairro() {
       this.loading = true
       let config = this.obterHeader()
+      this.error = ''
+      this.sucesso = ''
 
       await this.$axios
-        .put('administrador/bairros/' + id + '/inativa-ativa', {}, config)
+        .put(
+          `administrador/bairros/id-bairro/${this.idBairroMudar}/id-rota/${this.idGrupoRota}`,
+          {},
+          config
+        )
         .then((res) => {
           this.loading = false
+          this.sucesso = 'Grupo do bairro alterado com sucesso.'
+          this.idGrupoRota = 0
           this.obterBairros()
         })
         .catch((err) => {
           this.loading = false
+          this.error = err.response.data
         })
     },
     async cadastrarBairro() {
@@ -641,7 +725,7 @@ export default Vue.extend({
         .then((res) => {
           this.loading = false
           this.bairro = ''
-          //this.obterBairros()
+          this.obterBairros()
         })
         .catch((err) => {
           this.loading = false

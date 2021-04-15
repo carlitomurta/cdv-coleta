@@ -230,19 +230,23 @@
                 <div class="flex-1 text-start">
                   <label>Grupo Rota:</label><br />
                   <select
-                    class="relative mb-4 w-36 border-2 p-3 strong rounded-lg outline border-grey-200 focus-within:border-black"
-                    v-model="bairro.grupoRota"
+                    class="relative mb-4 w-48 border-2 p-3 strong rounded-lg outline border-grey-200 focus-within:border-black"
+                    v-model="bairro.idGrupoRota"
                   >
                     <option value="0">Selecione</option>
+                    <option v-for="g in gruposRotas" :key="g.id" :value="g.id">
+                      {{ g.nome }}
+                    </option>
                   </select>
                 </div>
                 <div class="flex-1 text-start">
                   <div class="mt-5">
                     <button
-                      class="block h-10 px-5 mx-auto font-bold text-white capitalize rounded shadow-md base-button bg-brand-green"
+                      class="block h-10 px-4 mx-auto font-bold text-white capitalize rounded shadow-md base-button bg-brand-green"
                       type="button"
                       role="button"
-                      @click="cadastrarBairro(bairro.nome)"
+                      :disabled="!bairro.nome && !bairro.grupoRota"
+                      @click="cadastrarBairro()"
                     >
                       Cadastrar
                     </button>
@@ -250,6 +254,17 @@
                 </div>
               </div>
               <hr />
+
+              <!-- Erro Cadastrar Bairro  -->
+              <div v-if="error" class="p-2 mt-1 bg-red-100 rounded-lg">
+                <p
+                  v-for="err in error"
+                  :key="err.descricao"
+                  class="text-sm text-center text-red-500"
+                >
+                  {{ err.descricao }}
+                </p>
+              </div>
 
               <div class="mt-2 overflow-y-scroll flex justify-center">
                 <table class="border-collapse bg-green-100 border-shadow">
@@ -308,109 +323,44 @@
       </div>
     </section>
 
-    <!-- <section>
+    <!-- Section Grupos Rotas -->
+    <section>
       <div>
-        <modal
-          name="modal-bairros"
-          :height="600"
-          :maxWidth="650"
-          :adaptive="true"
-        >
+        <modal name="modal-taxa" :height="550" :width="800" :adaptive="true">
           <div class="p-8">
-            <h2 class="text-start font-bold">Controle de Bairros</h2>
+            <h2 class="text-start font-bold">Grupos de Rotas</h2>
             <hr />
             <div class="flex items-stretch mb-2">
               <div class="flex-1 text-center">
                 <div
-                  class="mt-4 flex items-start relative mb-4 border-2 w-72 rounded-lg outline border-grey-200 focus-within:border-black"
+                  class="mt-4 flex items-start relative mb-4 border-2 w-40 rounded-lg outline border-grey-200 focus-within:border-black"
                 >
                   <input
-                    v-model="bairro.nome"
+                    v-model="grupo.nome"
                     type="text"
                     name="nome"
                     autocomplete="off"
                     required
-                    placeholder="Bairro"
+                    placeholder="Nome"
                     class="block w-full p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
                   />
                   <label
                     for="nome"
                     class="absolute top-0 p-4 text-sm duration-300 bg-white -z-1 origin-0"
-                    >Bairro</label
+                    >Nome</label
                   >
                 </div>
               </div>
               <div class="flex-1 text-center">
                 <div class="mt-5">
-                  <button
-                    class="block h-12 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
-                    type="button"
-                    role="button"
-                    @click="cadastrarBairro(bairro.nome)"
-                  >
-                    Cadastrar
-                  </button>
+                  <input
+                    v-model="grupo.possuiRota"
+                    name="rota"
+                    type="checkbox"
+                  />
+                  <label for="rota">Possui Rota</label>
                 </div>
               </div>
-            </div>
-            <hr />
-
-            <div class="mt-2 overflow-y-scroll">
-              <table class="border-collapse bg-green-100 border-shadow">
-                <thead>
-                  <tr>
-                    <th class="w-2/6 border border-green-300">Bairro</th>
-                    <th class="w-2/12 border border-green-300">Status</th>
-                    <th class="w-2/12 border border-green-300">Ação</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="bairro in listaBairros" :key="bairro.id">
-                    <td class="p-1 border border-green-300">
-                      {{ bairro.nome }}
-                    </td>
-                    <td class="p-1 border border-green-300">
-                      {{ bairro.ativo ? 'Ativo' : 'Inativo' }}
-                    </td>
-                    <td v-if="bairro.ativo" class="p-1 border border-green-300">
-                      <button
-                        class="block h-6 px-6 mx-auto text-center text-white capitalize rounded shadow-md base-button bg-yellow-500"
-                        type="button"
-                        role="button"
-                        @click="inativarAtivarBairro(bairro.id)"
-                      >
-                        Inativar
-                      </button>
-                    </td>
-                    <td
-                      v-if="!bairro.ativo"
-                      class="p-1 border border-green-300"
-                    >
-                      <button
-                        class="block h-6 px-6 mx-auto text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
-                        type="button"
-                        role="button"
-                        @click="inativarAtivarBairro(bairro.id)"
-                      >
-                        Ativar
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </modal>
-      </div>
-    </section> -->
-
-    <section>
-      <div>
-        <modal name="modal-taxa" :height="300" :maxWidth="350" :adaptive="true">
-          <div class="p-8">
-            <h2 class="text-start font-bold">Controle da Taxa de Adesão</h2>
-            <hr />
-            <div class="flex items-stretch mb-2">
               <div class="flex-1 text-center">
                 <div
                   class="mt-4 w-32 flex items-start relative mb-4 border-2 rounded-lg outline border-grey-200 focus-within:border-black"
@@ -422,36 +372,72 @@
                     required
                     placeholder="Valor"
                     class="block w-32 p-4 text-sm font-bold bg-transparent rounded-lg appearance-none focus:outline-none"
-                    v-model="taxa.valor"
+                    v-model="grupo.valor"
                     v-bind="money"
                   ></money>
                   <label
                     for="valor"
                     class="absolute top-0 p-4 text-sm duration-300 bg-white -z-1 origin-0"
-                    >Taxa</label
+                    >Valor</label
                   >
                 </div>
               </div>
               <div class="flex-1 text-center">
                 <div class="mt-5">
                   <button
-                    class="block h-12 px-5 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                    class="block h-10 px-4 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
                     type="button"
                     role="button"
-                    @click="atualizarTaxa(taxa.valor)"
+                    :disabled="!grupo.nome"
+                    @click="cadastrarGrupo()"
                   >
-                    Atualizar
+                    Cadastrar
                   </button>
                 </div>
               </div>
             </div>
             <hr />
 
-            <div class="mt-8">
-              <label>Valor Atual da Taxa:</label>
-              <strong class="text-green-500"
-                >R$ {{ taxaAtual.toLocaleString() }}</strong
+            <!-- Erro Cadastrar Grupo -->
+            <div v-if="error" class="p-2 mt-1 bg-red-100 rounded-lg">
+              <p
+                v-for="err in error"
+                :key="err.descricao"
+                class="text-sm text-center text-red-500"
               >
+                {{ err.descricao }}
+              </p>
+            </div>
+            <!-- Tabela de Grupos -->
+            <div class="mt-2 overflow-y-scroll flex justify-center">
+              <table class="border-collapse bg-green-100 border-shadow">
+                <thead>
+                  <tr>
+                    <th class="w-40 border border-green-300">Grupo</th>
+                    <th class="w-40 border border-green-300">Possui Rota</th>
+                    <th class="w-20 border border-green-300">Valor R$</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="grupo in gruposRotas" :key="grupo.id">
+                    <td class="p-1 border border-green-300">
+                      {{ grupo.nome }}
+                    </td>
+                    <td class="p-1 border border-green-300">
+                      {{ grupo.possuiRota ? 'Sim' : 'Não' }}
+                    </td>
+                    <td class="p-1 border border-green-300">
+                      {{
+                        'R$ ' +
+                        parseFloat(grupo.valor)
+                          .toFixed(2)
+                          .toString()
+                          .replace('.', ',')
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </modal>
@@ -502,6 +488,7 @@ export default Vue.extend({
     return {
       loading: false,
       nome: '',
+      error: '',
       pagina: 1,
       token: {},
       taxaAtual: 0,
@@ -539,12 +526,15 @@ export default Vue.extend({
       },
       bairro: {
         nome: '',
-        grupoRota: 0,
+        idGrupoRota: 0,
       },
       listaBairros: [],
-      taxa: {
-        valor: '',
+      grupo: {
+        valor: 0,
+        nome: '',
+        possuiRota: false,
       },
+      gruposRotas: [],
       money: {
         decimal: ',',
         thousands: '.',
@@ -565,6 +555,7 @@ export default Vue.extend({
   async mounted() {
     this.obterDadosToken()
     await this.obterEstatisticas()
+    await this.obterGruposRotas()
   },
   methods: {
     obterDadosToken() {
@@ -597,12 +588,25 @@ export default Vue.extend({
           this.loading = false
         })
     },
+    async obterGruposRotas() {
+      this.loading = true
+      let config = this.obterHeader()
+
+      await this.$axios
+        .get('administrador/grupos-rotas', config)
+        .then((res) => {
+          this.loading = false
+          this.gruposRotas = res.data.gruposRotas
+        })
+        .catch((err) => {
+          this.loading = false
+        })
+    },
     async showModal(pagina) {
       if (pagina == 3) {
         await this.obterBairros()
-        this.$modal.show('modal-bairros')
       } else if (pagina == 4) {
-        this.obterTaxa()
+        await this.obterGruposRotas()
         this.$modal.show('modal-taxa')
       }
     },
@@ -627,54 +631,38 @@ export default Vue.extend({
           this.loading = false
         })
     },
-    async cadastrarBairro(bairro) {
-      if (this.bairro.nome) {
-        this.loading = true
-        let config = this.obterHeader()
-
-        await this.$axios
-          .post(
-            'administrador/bairros',
-            { nome: this.bairro.nome, possuiRota: this.bairro.possuiRota },
-            config
-          )
-          .then((res) => {
-            this.loading = false
-            this.bairro.nome = ''
-            this.obterBairros()
-          })
-          .catch((err) => {
-            this.loading = false
-          })
-      }
-    },
-    async obterTaxa() {
+    async cadastrarBairro() {
       this.loading = true
       let config = this.obterHeader()
+      this.error = ''
 
       await this.$axios
-        .get('financeiro/valor-servico', config)
+        .post('administrador/bairros', this.bairro, config)
         .then((res) => {
           this.loading = false
-          this.taxaAtual = res.data.valor
+          this.bairro = ''
+          //this.obterBairros()
         })
         .catch((err) => {
           this.loading = false
+          this.error = err.response.data
         })
     },
-    async atualizarTaxa(taxa) {
+    async cadastrarGrupo() {
       this.loading = true
       let config = this.obterHeader()
+      this.error = ''
 
       await this.$axios
-        .put('financeiro/valor-servico', { valor: taxa }, config)
+        .post('administrador/grupos-rotas', this.grupo, config)
         .then((res) => {
           this.loading = false
-          this.taxa.valor = ''
-          this.obterTaxa()
+          this.grupo = {}
+          this.obterGruposRotas()
         })
-        .catch((res) => {
+        .catch((err) => {
           this.loading = false
+          this.error = err.response.data
         })
     },
     async obterEstatisticas() {

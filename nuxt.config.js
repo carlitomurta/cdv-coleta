@@ -1,62 +1,72 @@
 export default {
-  // Target (https://go.nuxtjs.dev/config-target)
-  target: 'static',
+    // Target (https://go.nuxtjs.dev/config-target)
+    target: 'static',
 
-  // Global page headers (https://go.nuxtjs.dev/config-head)
-  head: {
-    title: 'Coleta de Vizinhança',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'O site da coleta da sua vizinhança',
-      },
+    // Global page headers (https://go.nuxtjs.dev/config-head)
+    head: {
+        title: 'Coleta de Vizinhança',
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            {
+                hid: 'description',
+                name: 'description',
+                content: 'O site da coleta da sua vizinhança',
+            },
+        ],
+        link: [
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            {
+                rel: 'stylesheet',
+                href: 'https://fonts.googleapis.com/css2?family=Bowlby+One&family=Roboto&display=swap',
+            },
+        ],
+    },
+
+    // Global CSS (https://go.nuxtjs.dev/config-css)
+    css: [],
+
+    // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
+    plugins: [
+        '~plugins/vue-js-modal.js'
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },{
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Bowlby+One&family=Roboto&display=swap',
-      },],
-  },
 
-  // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [],
+    // Auto import components (https://go.nuxtjs.dev/config-components)
+    components: true,
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+    // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
+    buildModules: [
+        // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
+        '@nuxtjs/tailwindcss',
+    ],
 
-  // Auto import components (https://go.nuxtjs.dev/config-components)
-  components: true,
+    // Modules (https://go.nuxtjs.dev/config-modules)
+    modules: [
+        // https://go.nuxtjs.dev/axios
+        '@nuxtjs/axios',
+        // https://go.nuxtjs.dev/pwa
+        '@nuxtjs/pwa',
+        // Doc: https://github.com/nuxt-community/svg-module#readme
+        // Helper for svg rendering in Nuxtjs
+        '@nuxtjs/svg'
+    ],
 
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss',
-  ],
+    // Axios module configuration (https://go.nuxtjs.dev/config-axios)
+    axios: {
+        //baseURL: 'http://localhost:53496/coleta-seletiva/v1/',
+        baseURL: 'https://coletadevizinhanca.azurewebsites.net/coleta-seletiva/v1/'
+    },
 
-  // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/svg-module#readme
-    // Helper for svg rendering in Nuxtjs
-    '@nuxtjs/svg',
-  ],
-
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
-
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
-  // TailwindCSS
-  tailwindcss: {
-    // add '~tailwind.config` alias
-    exposeConfig: true,
-  },
-  purgeCSS: {
-    whitelist: ['dark-mode'],
-  },
+    // Build Configuration (https://go.nuxtjs.dev/config-build)
+    build: {
+        vendor: ['vue-apexcharts']
+    },
+    // TailwindCSS
+    tailwindcss: {
+        // add '~tailwind.config` alias
+        exposeConfig: true,
+    },
+    purgeCSS: {
+        whitelist: ['dark-mode'],
+    },
 }

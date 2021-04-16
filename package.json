@@ -1,28 +1,36 @@
 {
-  "name": "cdv",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint": "yarn lint:js"
-  },
-  "dependencies": {
-    "@nuxtjs/axios": "^5.12.2",
-    "@nuxtjs/pwa": "^3.0.2",
-    "@nuxtjs/svg": "^0.1.12",
-    "core-js": "^3.6.5",
-    "nuxt": "^2.14.6",
-    "vue-slick-carousel": "^1.0.6"
-  },
-  "devDependencies": {
-    "@nuxtjs/tailwindcss": "^3.4.2",
-    "@tailwindcss/postcss7-compat": "^2.0.2",
-    "autoprefixer": "^9.8.6",
-    "postcss": "^7.0.35",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
-  }
+    "name": "cdv",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "nuxt",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate",
+        "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+        "lint": "yarn lint:js"
+    },
+    "dependencies": {
+        "@northwalker/vue-hotel-datepicker": "^2.0.7",
+        "@nuxtjs/axios": "^5.12.2",
+        "@nuxtjs/pwa": "^3.0.2",
+        "@nuxtjs/svg": "^0.1.12",
+        "apexcharts": "^3.25.0",
+        "core-js": "^3.6.5",
+        "jwt-decode": "^3.1.2",
+        "nuxt": "^2.14.6",
+        "v-money": "^0.8.1",
+        "vue-apexcharts": "^1.6.1",
+        "vue-js-modal": "^2.0.0-rc.6",
+        "vue-loading-overlay": "^3.4.2",
+        "vue-slick-carousel": "^1.0.6",
+        "vue-the-mask": "^0.11.1"
+    },
+    "devDependencies": {
+        "@nuxtjs/tailwindcss": "^3.4.2",
+        "@tailwindcss/postcss7-compat": "^2.0.2",
+        "autoprefixer": "^9.8.6",
+        "postcss": "^7.0.35",
+        "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
+    }
 }

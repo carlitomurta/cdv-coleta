@@ -111,7 +111,7 @@
                     <option value="credit_card">Cartão</option>
                   </select>
                 </div>
-                <div class="flex-1 text-start">
+                <div class="flex-1 ml-5 text-start">
                   <label>Bairro:</label><br />
                   <select
                     class="relative mb-4 w-36 border-2 p-3 strong rounded-lg outline border-grey-200 focus-within:border-black"
@@ -127,7 +127,7 @@
                     </option>
                   </select>
                 </div>
-                <div class="flex-1 text-start">
+                <div class="flex-1 ml-5 text-start">
                   <label>Status Pagamento:</label><br />
                   <select
                     class="relative mb-4 w-36 border-2 p-3 strong rounded-lg outline border-grey-200 focus-within:border-black"
@@ -140,9 +140,9 @@
                     <option value="OVERDUE">Vencida</option>
                   </select>
                 </div>
-                <div class="flex-1 text-start mt-6">
+                <div class="flex-1 ml-5 text-start mt-6">
                   <button
-                    class="block h-12 min-h-0 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
+                    class="block h-10 px-10 mx-auto font-bold text-center text-white capitalize rounded shadow-md base-button bg-brand-green"
                     type="button"
                     role="button"
                     @click="filtrarVendas"

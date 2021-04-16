@@ -277,7 +277,7 @@ export default Vue.extend({
         .then((res) => {
           this.loading = false
           this.listaBairros = res.data.bairros.filter((b) => {
-            return b.ativo
+            return b.ativo && b.possuiRota
           })
         })
         .catch((res) => {

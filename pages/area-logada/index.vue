@@ -14,7 +14,16 @@
               <h1>
                 Para a adesão de sua casa ou de seu apartamento, preencha este
                 formulário. O preço atual é de
-                <strong> R$ {{ precoAdesao.toLocaleString() }} reais.</strong>
+                <strong>
+                  R$
+                  {{
+                    parseFloat(precoAdesao)
+                      .toFixed(2)
+                      .toString()
+                      .replace('.', ',')
+                  }}
+                  reais.</strong
+                >
               </h1>
               <p>
                 Caso a adesão seja do seu prédio ou do seu condomínio, preencha
@@ -945,7 +954,13 @@
                       <td class="p-1 border">{{ h.cicloDePagamento }}</td>
                       <td class="p-1 border">{{ h.statusPagamento }}</td>
                       <td class="p-1 border">
-                        R$ {{ h.valor.toString().replace('.', ',') }}
+                        R$
+                        {{
+                          parseFloat(h.valor)
+                            .toFixed(2)
+                            .toString()
+                            .replace('.', ',')
+                        }}
                       </td>
                       <td class="p-1 border">
                         {{
@@ -956,9 +971,13 @@
                       </td>
                       <td class="p-1 border">
                         <button
-                          v-bind:disabled="h.tipoDePagamento != 'Boleto'"
+                          v-bind:disabled="
+                            h.tipoDePagamento != 'Boleto' ||
+                            h.statusPagamento == 'Pago'
+                          "
                           class="block h-6 px-3 text-center text-white shadow-md bg-brand-green"
                           type="button"
+                          @click="downloadBoleto()"
                         >
                           2ª Via
                         </button>
@@ -1072,11 +1091,6 @@ export default Vue.extend({
   async mounted() {
     await this.obterDadosToken()
     await this.statusPagamento()
-    if (!this.statusPagamentoCliente) {
-      await this.obterValorAdesao()
-    } else if (this.statusPagamentoCliente) {
-      await this.obterMeuHistorico()
-    }
   },
   methods: {
     async salvarAdesao() {
@@ -1127,11 +1141,11 @@ export default Vue.extend({
       let config = this.obterHeader()
 
       await this.$axios
-        .get('financeiro/valor-servico', config)
+        .get(`financeiro/valor-adesao/${this.token.bairro}/bairro`, config)
         .then((res) => {
           this.loading = false
 
-          this.precoAdesao = res.data.valor
+          this.precoAdesao = res.data
         })
         .catch((err) => {
           this.loading = false
@@ -1246,6 +1260,12 @@ export default Vue.extend({
         .then((res) => {
           this.loading = false
           this.statusPagamentoCliente = res.data
+
+          if (!this.statusPagamentoCliente) {
+            this.obterValorAdesao()
+          } else if (this.statusPagamentoCliente) {
+            this.obterMeuHistorico()
+          }
         })
         .catch((err) => {
           this.loading = false

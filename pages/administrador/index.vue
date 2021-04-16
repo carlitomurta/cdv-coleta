@@ -539,12 +539,13 @@ hr {
 import Vue from 'vue'
 import Loading from 'vue-loading-overlay'
 import VueTheMask from 'vue-the-mask'
-import 'vue-loading-overlay/dist/vue-loading.css'
 import VueApexCharts from 'vue-apexcharts'
+import 'vue-loading-overlay/dist/vue-loading.css'
 import VueHotelDatepicker from '@northwalker/vue-hotel-datepicker'
 import { Money } from 'v-money'
 
 Vue.use(VueTheMask, VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 
 export default Vue.extend({
   data() {
@@ -615,7 +616,6 @@ export default Vue.extend({
     }
   },
   components: {
-    apexchart: VueApexCharts,
     Loading,
     VueHotelDatepicker,
     Money,

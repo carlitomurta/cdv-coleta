@@ -20,7 +20,7 @@
         "jwt-decode": "^3.1.2",
         "nuxt": "^2.14.6",
         "v-money": "^0.8.1",
-        "vue-apexcharts": "^1.6.0",
+        "vue-apexcharts": "^1.6.1",
         "vue-js-modal": "^2.0.0-rc.6",
         "vue-loading-overlay": "^3.4.2",
         "vue-slick-carousel": "^1.0.6",

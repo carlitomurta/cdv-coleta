@@ -10,21 +10,56 @@
         >
           <div>
             <img
-              src="~/static/1.jpg"
+              src="~/static/carousel/c_1.jpeg"
               class="object-cover img-carousel w-full mx-auto h-96"
               alt="1"
             />
           </div>
           <div>
             <img
-              src="~/static/2.jpg"
+              src="~/static/carousel/c_2.jpeg"
               class="object-cover img-carousel w-full mx-auto h-96"
               alt="1"
             />
           </div>
           <div>
             <img
-              src="~/static/3.jpg"
+              src="~/static/carousel/c_3.jpeg"
+              class="object-cover img-carousel w-full mx-auto h-96"
+              alt="1"
+            />
+          </div>
+          <div>
+            <img
+              src="~/static/carousel/c_4.jpeg"
+              class="object-cover img-carousel w-full mx-auto h-96"
+              alt="1"
+            />
+          </div>
+          <div>
+            <img
+              src="~/static/carousel/c_5.jpeg"
+              class="object-cover img-carousel w-full mx-auto h-96"
+              alt="1"
+            />
+          </div>
+          <div>
+            <img
+              src="~/static/carousel/c_6.jpeg"
+              class="object-cover img-carousel w-full mx-auto h-96"
+              alt="1"
+            />
+          </div>
+          <div>
+            <img
+              src="~/static/carousel/c_7.jpeg"
+              class="object-cover img-carousel w-full mx-auto h-96"
+              alt="1"
+            />
+          </div>
+          <div>
+            <img
+              src="~/static/carousel/c_8.jpeg"
               class="object-cover img-carousel w-full mx-auto h-96"
               alt="1"
             />

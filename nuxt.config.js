@@ -48,16 +48,19 @@ export default {
         '@nuxtjs/pwa',
         // Doc: https://github.com/nuxt-community/svg-module#readme
         // Helper for svg rendering in Nuxtjs
-        '@nuxtjs/svg',
+        '@nuxtjs/svg'
     ],
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-        baseURL: 'http://localhost:53496/coleta-seletiva/v1/'
+        //baseURL: 'http://localhost:53496/coleta-seletiva/v1/',
+        baseURL: 'https://coletadevizinhanca.azurewebsites.net/coleta-seletiva/v1/'
     },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
-    build: {},
+    build: {
+        vendor: ['vue-apexcharts']
+    },
     // TailwindCSS
     tailwindcss: {
         // add '~tailwind.config` alias

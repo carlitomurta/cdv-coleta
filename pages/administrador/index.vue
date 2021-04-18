@@ -544,7 +544,7 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import VueHotelDatepicker from '@northwalker/vue-hotel-datepicker'
 import { Money } from 'v-money'
 
-Vue.use(VueTheMask, VueApexCharts)
+Vue.use(VueTheMask, VueApexCharts, Loading, VueHotelDatepicker, Money)
 Vue.component('apexchart', VueApexCharts)
 
 export default Vue.extend({
@@ -617,6 +617,7 @@ export default Vue.extend({
   },
   components: {
     Loading,
+    VueTheMask,
     VueHotelDatepicker,
     Money,
   },
